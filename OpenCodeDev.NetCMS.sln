@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31229.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Shared", "Shared\OpenCodeDev.NetCms.Shared.csproj", "{8F3F126C-F1FE-49EC-AF6D-20743E521E0F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Server", "Server\OpenCodeDev.NetCms.Server.csproj", "{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Core", "Core\OpenCodeDev.NetCms.Core.csproj", "{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Admin", "Admin\OpenCodeDev.NetCms.Admin.csproj", "{1CDECE89-22B2-42AF-A1F6-8735599D9167}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CompileCMS|Any CPU = CompileCMS|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F3F126C-F1FE-49EC-AF6D-20743E521E0F}.CompileCMS|Any CPU.ActiveCfg = NetCMS|Any CPU
+		{8F3F126C-F1FE-49EC-AF6D-20743E521E0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3F126C-F1FE-49EC-AF6D-20743E521E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3F126C-F1FE-49EC-AF6D-20743E521E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3F126C-F1FE-49EC-AF6D-20743E521E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}.CompileCMS|Any CPU.ActiveCfg = NetCMS|Any CPU
+		{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.CompileCMS|Any CPU.ActiveCfg = NetCMS|Any CPU
+		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.CompileCMS|Any CPU.ActiveCfg = NetCMS|Any CPU
+		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E2054588-3AB3-4579-93A6-47DEEE0BF52F}
+	EndGlobalSection
+EndGlobal

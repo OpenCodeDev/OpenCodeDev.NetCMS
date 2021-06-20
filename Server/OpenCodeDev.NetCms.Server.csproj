@@ -1,0 +1,89 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>OpenCodeDev.NetCms.Server</AssemblyName>
+    <RootNamespace>OpenCodeDev.NetCms.Server</RootNamespace>
+    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+    <Configurations>Debug;Release;NetCMS</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.37.0" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.37.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" />
+    <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.0.152" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" />
+    <PackageReference Include="System.Net.Security" Version="4.3.2" />
+  </ItemGroup>
+
+   <Import Project="NetCMS.targets" />
+
+   <Target Name="CopyFiles" AfterTargets="Foo" BeforeTargets="Build">
+     <PropertyGroup>
+      <SidBackupDir>$(SolutionDir)\netcms.compiled\NetCMSServer</SidBackupDir>
+
+    </PropertyGroup>
+    <ItemGroup>
+      <NetCMSSource Include="$(ProjectDir)\**\*.cs" />
+      <NetCMSProcessing Include="$(SidBackupDir)\**\*.cs" />
+    </ItemGroup>
+    <MakeDir Directories="$(SidBackupDir)" />
+    <Message Text="Created NetCMS Processing Directory: $(SidBackupDir)" Importance="High" />
+    <GetFileHash Files="@(NetCMSSource)" Algorithm="SHA384">
+    <Output TaskParameter="Items" ItemName="FilesWithHashes" /></GetFileHash>
+        <Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
+    <Copy SourceFiles="@(NetCMSSource)" DestinationFiles="@(NetCMSSource->'$(SidBackupDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
+     
+    
+     
+  </Target>
+  
+  <Target Name="Compile" DependsOnTargets="CopyFiles">
+    <Message Text="Compiling NetCMS Project" Importance="High" />
+    <CSC Sources="@(NetCMSProcessing)" References="@(Reference)" />
+  </Target>
+  
+     <Target Name="DeleteNetCMS" AfterTargets="Build">
+    <Message Text="Deleting NetCMS Processing Directory: $(SidBackupDir)" Importance="High" />
+    <RemoveDir Directories="$(SidBackupDir)" />
+
+  </Target>
+  <!-- <Target Name="Hello" BeforeTargets="Build">
+    <CopyFiles />
+  </Target> -->
+  
+  <ItemGroup>
+    <Folder Include="Api\Recipe\Config\" />
+    <Folder Include="DataContext\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCodeDev.NetCms.Shared\OpenCodeDev.NetCms.Shared.csproj" />
+    <ProjectReference Include="..\Shared\OpenCodeDev.NetCms.Shared.csproj" />
+  </ItemGroup>
+
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="echo $(AssemblyName)&#xD;&#xA;netcms build &quot;netcms.json&quot; &quot;$(SolutionDir)&quot; &quot;$(SolutionFileName)&quot; &quot;$(ProjectDir)&quot; &quot;$(ProjectFileName)&quot; &quot;$(TargetDir)&quot; &quot;$(TargetFileName)&quot;" />
+  </Target>
+
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo &quot;TEST AFTER&quot;" />
+  </Target>
+
+</Project>

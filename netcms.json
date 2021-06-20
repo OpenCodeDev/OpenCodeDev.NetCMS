@@ -1,0 +1,23 @@
+{
+  "Framework": {
+    "Version": "net5.0",
+    "MSBuild": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\msbuild.exe"
+  },
+  "Trio": {
+    "Admin": {
+      "Path": "./admin/",
+      "Project": "OpenCodeDev.NetCms.Admin.csproj",
+      "AssemblyName": "OpenCodeDev.NetCms.Admin"
+    },
+    "Server": {
+      "Path": "./server/",
+      "Project": "OpenCodeDev.NetCms.Server.csproj",
+      "AssemblyName": "OpenCodeDev.NetCms.Server"
+    },
+    "Shared": {
+      "Path": "./shared/",
+      "Project": "OpenCodeDev.NetCms.Shared.csproj",
+      "AssemblyName": "OpenCodeDev.NetCms.Shared"
+    }
+  }
+}
