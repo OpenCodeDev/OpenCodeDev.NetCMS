@@ -5,8 +5,34 @@ Goal is to offer and easy way to create api tables, execute CRUD and set permiss
 
 Not only that but also allow deploy as cluster with central admin management so can be scaled lastly allow to sperate the admin dashboard from the api server.
 
+Project still very early at idea stage we"ll build up from there using well master concepts.
 
+## Why?
+I never found exactly a good tool that is consistent especially when it come to data.
 
+Example: Strapi sometime return {"key":null}, {"key":0} or {"key":{"id":0}}... data integrity is not there also if you build micro-services it can be complex to handle permissions and auth when contacting a specific service... especially when it comes to auth our goal here is to avoid having to contact other server for permission and auth purposes making request faster.
+
+Because we want to leverage GRPC power but also allow classic JSON API wrapped around GRPC without having to create twice the behavior.
+
+Lastly, while using strapi or wordpress it is great to have the administration built in but it can be a horrible thing when you have to handle multiple services... that why we aim to create the administration the same way strapi does with cutting edge Blazor tech-stack but can be easly hosted elsewhere like a seperated application but also can handle multiple related micro-service and integrate their data from a single dashboard.
+
+# Possible Roadmap
+## 2021
+- Can Create GRPC/JSON Api routes and call its CRUD from GRPC and JSON POST/GET/PUT/DEL
+- Can Request 1 Depth Nested Relation to be return.
+- Can Fetch with Extensive Smart Search System.
+- Can Define and Set Public/Stric Private Model Fields.
+- Can Extend Administration Dashboard.
+- Support Plugin at Runtime.
+- Can Develop Back-End Plugins with Front-End (Dashboard).
+- Auto-Generate Basic Api Behavior (CRUD) with CLI.
+
+## 2022
+- Completed Open-Source Client-Side.
+- Support for Deepnesting Level (Circular will be nulled).
+- Auto-Generated Basic Api Behavior (CRUD from Dashboard).
+- Fully Support Plugin at Runtime.
+- Thats all i could think of for the moment.
 
 # NOTE TO MYSELF
 Config -> Json Routes (Grpc or Traditional Api) Grpc:true, WebApi: true, DataContext: "Name" (Relation must be same DbContext)
