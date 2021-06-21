@@ -23,7 +23,7 @@
 
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" requireReinstallation="true" />
 
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.0" requireReinstallation="true"  />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.0" requireReinstallation="true" />
 
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" requireReinstallation="true" />
 
@@ -37,7 +37,7 @@
     <ProjectReference Include="..\OpenCodeDev.NetCMS.Core.Attributes\OpenCodeDev.NetCMS.Core.Attributes.csproj" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;CompileCMS&quot; (&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.AssemblyName&quot; &quot;$(AssemblyName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(RootNamespace)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.ProjectName&quot; &quot;$(ProjectName)&quot;&#xD;&#xA;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvironmentPath&quot; &quot;$(DevEnvDir)\&quot;&#xD;&#xA;)" />
+    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;CompileCMS&quot; (&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.AssemblyName&quot; &quot;$(AssemblyName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(RootNamespace)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.ProjectName&quot; &quot;$(ProjectName)&quot;&#xD;&#xA;)" />
   </Target>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="echo   &quot;$(ConfigurationName)&quot;" />
