@@ -16,6 +16,11 @@ Because we want to leverage GRPC power but also allow classic JSON API wrapped a
 
 Lastly, while using strapi or wordpress it is great to have the administration built in but it can be a horrible thing when you have to handle multiple services... that why we aim to create the administration the same way strapi does with cutting edge Blazor tech-stack but can be easly hosted elsewhere like a seperated application but also can handle multiple related micro-service and integrate their data from a single dashboard.
 
+# Rough Goals
+1. Avoid Using Reflection at Runtime (During Request), as much as possible.
+2. Use Reflection at Compile Time, Make File Changes Before Compile.
+3. Load Plugin at Runtime (Load Before server available) with Reflection.
+4. Try to make a system that will avoid Hook thru reflection (maybe squash everything in during compiling?)
 # Possible Roadmap
 ## 2021
 - Can Create GRPC/JSON Api routes and call its CRUD from GRPC and JSON POST/GET/PUT/DEL

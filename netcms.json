@@ -1,23 +1,52 @@
 {
-  "Framework": {
+  "Solution": {
+    "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCms\"",
+    "FileName": "OpenCodeDev.NetCMS.sln",
     "Version": "net5.0",
-    "MSBuild": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\msbuild.exe"
+    "MSBuild": "",
+    "EnvrionmentPath": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\Common7\\IDE\""
   },
   "Trio": {
     "Admin": {
-      "Path": "./admin/",
+      "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCms\\Admin\\",
       "Project": "OpenCodeDev.NetCms.Admin.csproj",
-      "AssemblyName": "OpenCodeDev.NetCms.Admin"
+      "AssemblyName": "OpenCodeDev.NetCms.Admin",
+      "Namespace": "OpenCodeDev.NetCms.Admin",
+      "TargetFileName": "OpenCodeDev.NetCms.Admin.dll"
     },
     "Server": {
-      "Path": "./server/",
+      "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCms\\Server\\",
       "Project": "OpenCodeDev.NetCms.Server.csproj",
-      "AssemblyName": "OpenCodeDev.NetCms.Server"
+      "AssemblyName": "OpenCodeDev.NetCms.Server",
+      "Namespace": "OpenCodeDev.NetCms.Server",
+      "TargetFileName": "OpenCodeDev.NetCms.Server.dll"
     },
     "Shared": {
-      "Path": "./shared/",
+      "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCms\\Shared\\",
       "Project": "OpenCodeDev.NetCms.Shared.csproj",
-      "AssemblyName": "OpenCodeDev.NetCms.Shared"
+      "AssemblyName": "OpenCodeDev.NetCms.Shared",
+      "Namespace": "OpenCodeDev.NetCms.Shared",
+      "TargetFileName": "OpenCodeDev.NetCms.Shared.dll"
     }
-  }
+  },
+  "Api": [
+    {
+      "Name": "Recipe",
+      "Root": "./server/api/recipe/",
+      "ServerControllerNameSpace": "Api.Recipe.Controllers.RecipeController",
+      "ServerControllerFile": "./server/api/recipe/controllers/RecipeController.cs",
+      "ServerModelFullname": "OpenCodeDev.NetCms.Server.Api.Recipe.Models.RecipeModel",
+      "ServerModelFile": "./server/api/recipe/models/RecipeModel.cs",
+      "SharedRoot": "./shared/api/Recipe",
+      "SharedModelFullname": "OpenCodeDev.NetCms.Shared.Api.Recipe.Models.RecipePublicModel",
+      "SharedServiceController": "./shared/api/Recipe/IRecipeController.cs",
+      "SharedModelFile": "./shared/api/Recipe/Models/RecipePublicModel.cs",
+      "SharedSearchConditionFullName": "OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeCondition",
+      "SharedSearchConditionFile": "./shared/api/Recipe/Messages/RecipeCondition.cs",
+      "SharedModelReferenceFullname": "OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeReference",
+      "SharedModelReferenceFile": "./shared/api/Recipe/Messages/RecipeReference.cs",
+      "SharedFetchRequestFullName": "OpenCodeDev.NetCms.Shared.Api.Recipes.Messages.RecipeFetchRequest",
+      "SharedFetchRequestFile": "./shared/api/Recipe/Messages/RecipeFetchRequest.cs"
+    }
+  ]
 }

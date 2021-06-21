@@ -6,42 +6,41 @@
     <RootNamespace>OpenCodeDev.NetCms.Server</RootNamespace>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
     <Configurations>Debug;Release;NetCMS</Configurations>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    <PackageReference Include="Grpc.AspNetCore" Version="2.37.0" />
-    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.37.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="5.0.5" requireReinstallation="true" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" requireReinstallation="true" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.37.0" requireReinstallation="true" />
+    <PackageReference Include="Grpc.AspNetCore.Web" Version="2.37.0" requireReinstallation="true" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" requireReinstallation="true" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.5" requireReinstallation="true">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" requireReinstallation="true" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5" requireReinstallation="true">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" />
-    <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.0.152" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" />
-    <PackageReference Include="System.Net.Security" Version="4.3.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.0" requireReinstallation="true" />
+    <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.0.152" requireReinstallation="true" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" requireReinstallation="true" />
+    <PackageReference Include="System.Net.Security" Version="4.3.2" requireReinstallation="true" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\Recipe\Config\" />
     <Folder Include="DataContext\" />
   </ItemGroup>
-
-
   <ItemGroup>
-    <ProjectReference Include="..\OpenCodeDev.NetCms.Shared\OpenCodeDev.NetCms.Shared.csproj" />
     <ProjectReference Include="..\Shared\OpenCodeDev.NetCms.Shared.csproj" />
   </ItemGroup>
 
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="echo netcms build &quot;netcms.json&quot; &quot;$(SolutionDir)\&quot; &quot;$(SolutionFileName)&quot; &quot;$(ProjectDir)\&quot; &quot;$(ProjectFileName)&quot; &quot;$(TargetDir)\&quot; &quot;$(TargetFileName)&quot;" />
+    <Exec Command="netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvrionmentPath&quot; &quot;$(DevEnvDir)&quot;&#xD;&#xA;&#xD;&#xA;echo netcms build &quot;netcms.json&quot; &quot;$(SolutionDir)\&quot; &quot;$(SolutionFileName)&quot; &quot;$(ProjectDir)\&quot; &quot;$(ProjectFileName)&quot; &quot;$(TargetDir)\&quot; &quot;$(TargetFileName)&quot;" />
   </Target>
 
 

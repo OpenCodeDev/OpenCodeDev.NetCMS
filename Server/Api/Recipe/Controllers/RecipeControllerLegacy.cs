@@ -8,12 +8,11 @@ using Microsoft.AspNetCore.Http;
 using ProtoBuf.Grpc;
 using Grpc.Core;
 
+
 namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers
 {
-// sdasd
     [ApiController]
     [Route("/api/recipe")]
-
     public class RecipeControllerLegacy: ControllerBase
     {
         private readonly IHttpContextAccessor _httpContextAccessor;

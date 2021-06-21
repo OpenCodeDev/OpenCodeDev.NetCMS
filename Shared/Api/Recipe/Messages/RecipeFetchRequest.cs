@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenCodeDev.NetCms.Shared.Api._Core.Messages
+namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
 {
 
     [ProtoContract]

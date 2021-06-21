@@ -1,4 +1,7 @@
-﻿using ProtoBuf;
+﻿
+
+using OpenCodeDev.NetCms.Shared.Api.Recipe.Models;
+using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +17,7 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
     /// Inside Model check relations, if relation are available, add it here
     /// </summary>
     [ProtoContract]
+
     public class RecipeReference
     {
         /// <summary>

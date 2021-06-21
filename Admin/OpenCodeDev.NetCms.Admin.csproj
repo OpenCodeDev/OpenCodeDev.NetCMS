@@ -27,4 +27,8 @@
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Admin.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Admin.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Admin.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvrionmentPath&quot; &quot;$(DevEnvDir)&quot;" />
+  </Target>
+
 </Project>

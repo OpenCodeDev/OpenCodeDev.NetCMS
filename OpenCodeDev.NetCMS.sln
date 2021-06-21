@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Core", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Admin", "Admin\OpenCodeDev.NetCms.Admin.csproj", "{1CDECE89-22B2-42AF-A1F6-8735599D9167}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenCodeDev.NetCMS.Core.Attributes", "OpenCodeDev.NetCMS.Core.Attributes\OpenCodeDev.NetCMS.Core.Attributes.csproj", "{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CompileCMS|Any CPU = CompileCMS|Any CPU
@@ -38,6 +40,12 @@ Global
 		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.CompileCMS|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.CompileCMS|Any CPU.Build.0 = Debug|Any CPU
+		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

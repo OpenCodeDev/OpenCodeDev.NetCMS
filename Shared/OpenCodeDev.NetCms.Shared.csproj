@@ -27,4 +27,10 @@
 
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenCodeDev.NetCMS.Core.Attributes\OpenCodeDev.NetCMS.Core.Attributes.csproj" />
+  </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvrionmentPath&quot; &quot;$(DevEnvDir)&quot;" />
+  </Target>
 </Project>
