@@ -28,43 +28,6 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" />
     <PackageReference Include="System.Net.Security" Version="4.3.2" />
   </ItemGroup>
-
-   <Import Project="NetCMS.targets" />
-
-   <Target Name="CopyFiles" AfterTargets="Foo" BeforeTargets="Build">
-     <PropertyGroup>
-      <SidBackupDir>$(SolutionDir)\netcms.compiled\NetCMSServer</SidBackupDir>
-
-    </PropertyGroup>
-    <ItemGroup>
-      <NetCMSSource Include="$(ProjectDir)\**\*.cs" />
-      <NetCMSProcessing Include="$(SidBackupDir)\**\*.cs" />
-    </ItemGroup>
-    <MakeDir Directories="$(SidBackupDir)" />
-    <Message Text="Created NetCMS Processing Directory: $(SidBackupDir)" Importance="High" />
-    <GetFileHash Files="@(NetCMSSource)" Algorithm="SHA384">
-    <Output TaskParameter="Items" ItemName="FilesWithHashes" /></GetFileHash>
-        <Message Importance="High" Text="@(FilesWithHashes->'%(Identity): %(FileHash)')" />
-    <Copy SourceFiles="@(NetCMSSource)" DestinationFiles="@(NetCMSSource->'$(SidBackupDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-     
-    
-     
-  </Target>
-  
-  <Target Name="Compile" DependsOnTargets="CopyFiles">
-    <Message Text="Compiling NetCMS Project" Importance="High" />
-    <CSC Sources="@(NetCMSProcessing)" References="@(Reference)" />
-  </Target>
-  
-     <Target Name="DeleteNetCMS" AfterTargets="Build">
-    <Message Text="Deleting NetCMS Processing Directory: $(SidBackupDir)" Importance="High" />
-    <RemoveDir Directories="$(SidBackupDir)" />
-
-  </Target>
-  <!-- <Target Name="Hello" BeforeTargets="Build">
-    <CopyFiles />
-  </Target> -->
-  
   <ItemGroup>
     <Folder Include="Api\Recipe\Config\" />
     <Folder Include="DataContext\" />
@@ -78,7 +41,7 @@
 
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="echo $(AssemblyName)&#xD;&#xA;netcms build &quot;netcms.json&quot; &quot;$(SolutionDir)&quot; &quot;$(SolutionFileName)&quot; &quot;$(ProjectDir)&quot; &quot;$(ProjectFileName)&quot; &quot;$(TargetDir)&quot; &quot;$(TargetFileName)&quot;" />
+    <Exec Command="echo netcms build &quot;netcms.json&quot; &quot;$(SolutionDir)\&quot; &quot;$(SolutionFileName)&quot; &quot;$(ProjectDir)\&quot; &quot;$(ProjectFileName)&quot; &quot;$(TargetDir)\&quot; &quot;$(TargetFileName)&quot;" />
   </Target>
 
 
