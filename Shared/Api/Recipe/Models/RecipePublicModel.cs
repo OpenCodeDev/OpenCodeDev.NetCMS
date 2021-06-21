@@ -15,11 +15,17 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Models
     public class RecipePublicModel
     {
         [Key]
+        [Column]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
         [Required]
+        [Column]
         public string Name { get; set; }
+
+        [Required]
+        [Column]
+        public int Duration { get; set; }
     }
 }

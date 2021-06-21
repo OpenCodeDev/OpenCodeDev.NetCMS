@@ -24,7 +24,6 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
         /// <summary>
         /// Limit the number of result (Max: 400)
         /// </summary>
-        /// 
         [ProtoMember(2)]
         public int Limit { get; set; }
 

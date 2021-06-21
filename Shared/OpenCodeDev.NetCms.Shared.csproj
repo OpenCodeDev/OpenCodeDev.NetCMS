@@ -3,34 +3,43 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
-    <Configurations>Debug;Release;NetCMS</Configurations>
+    <Configurations>Debug;Release;CompileCMS</Configurations>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CompileCMS|AnyCPU'">
+    <OutputPath>bin\NetCMS\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
 
-    <PackageReference Include="Grpc.Core" Version="2.37.1" />
+    <PackageReference Include="Grpc.Core" Version="2.37.1" requireReinstallation="true" />
 
-    <PackageReference Include="Grpc.Net.Client" Version="2.37.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.37.0" requireReinstallation="true" />
 
-    <PackageReference Include="Grpc.Net.Client.Web" Version="2.37.0" />
+    <PackageReference Include="Grpc.Net.Client.Web" Version="2.37.0" requireReinstallation="true" />
 
-    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.5" requireReinstallation="true" />
 
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" requireReinstallation="true" />
 
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.0" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.0" requireReinstallation="true"  />
 
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" requireReinstallation="true" />
 
-    <PackageReference Include="OpenCodeDev.EntityFramework.Permissions.Grpc.DataAnnotations" Version="1.0.0" />
+    <PackageReference Include="OpenCodeDev.EntityFramework.Permissions.Grpc.DataAnnotations" Version="1.0.0" requireReinstallation="true" />
 
-    <PackageReference Include="protobuf-net.Grpc" Version="1.0.152" />
+    <PackageReference Include="protobuf-net.Grpc" Version="1.0.152" requireReinstallation="true" />
 
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" requireReinstallation="true" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenCodeDev.NetCMS.Core.Attributes\OpenCodeDev.NetCMS.Core.Attributes.csproj" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvrionmentPath&quot; &quot;$(DevEnvDir)&quot;" />
+    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;CompileCMS&quot; (&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.AssemblyName&quot; &quot;$(AssemblyName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(RootNamespace)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.ProjectName&quot; &quot;$(ProjectName)&quot;&#xD;&#xA;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvironmentPath&quot; &quot;$(DevEnvDir)\&quot;&#xD;&#xA;)" />
+  </Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo   &quot;$(ConfigurationName)&quot;" />
   </Target>
 </Project>

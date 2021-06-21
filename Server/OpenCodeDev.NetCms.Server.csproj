@@ -5,9 +5,13 @@
     <AssemblyName>OpenCodeDev.NetCms.Server</AssemblyName>
     <RootNamespace>OpenCodeDev.NetCms.Server</RootNamespace>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
-    <Configurations>Debug;Release;NetCMS</Configurations>
+    <Configurations>Debug;Release;CompileCMS</Configurations>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PreserveCompilationContext>true</PreserveCompilationContext>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CompileCMS|AnyCPU'">
+    <OutputPath>bin\NetCMS\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,13 +43,13 @@
   </ItemGroup>
 
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvrionmentPath&quot; &quot;$(DevEnvDir)&quot;&#xD;&#xA;&#xD;&#xA;echo netcms build &quot;netcms.json&quot; &quot;$(SolutionDir)\&quot; &quot;$(SolutionFileName)&quot; &quot;$(ProjectDir)\&quot; &quot;$(ProjectFileName)&quot; &quot;$(TargetDir)\&quot; &quot;$(TargetFileName)&quot;" />
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo &quot;TEST AFTER&quot;" />
   </Target>
 
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="echo &quot;TEST AFTER&quot;" />
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;CompileCMS&quot; (&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.ProjectName&quot; &quot;$(ProjectName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.AssemblyName&quot; &quot;$(AssemblyName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.TargetFileName&quot; &quot;$(RootNamespace)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Version&quot; &quot;$(TargetFramework)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvironmentPath&quot; &quot;$(DevEnvDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.MSBuild&quot; &quot;$(MSBuildToolsPath)\\MSBuild.exe&quot;&#xD;&#xA;netcms build &quot;$(SolutionDir)\netcms.json&quot;&#xD;&#xA;)" />
   </Target>
 
 </Project>
