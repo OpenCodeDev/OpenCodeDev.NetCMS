@@ -39,6 +39,8 @@
     <Folder Include="DataContext\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Server\OpenCodeDev.NetCMS.Core.Server.csproj" />
+    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Shared\OpenCodeDev.NetCMS.Core.Shared.csproj" />
     <ProjectReference Include="..\Shared\OpenCodeDev.NetCms.Shared.csproj" />
   </ItemGroup>
 

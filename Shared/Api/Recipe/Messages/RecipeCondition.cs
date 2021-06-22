@@ -7,9 +7,8 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-using OpenCodeDev.NetCms.Shared.Api._Core.Messages;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Models;
-
+using OpenCodeDev.NetCMS.Core.Shared.Api.Messages;
 namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
 {
     /// <summary>

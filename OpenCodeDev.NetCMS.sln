@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Client",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Admin", "Admin\OpenCodeDev.NetCMS.Admin.csproj", "{32602D84-36F4-4DC1-8F89-465198A65A04}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Core.Server", "..\OpenCodeDev.NetCMS.Core\Server\OpenCodeDev.NetCMS.Core.Server.csproj", "{24CFE8B5-4339-4EB7-86B8-93476AC9D204}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Core.Shared", "..\OpenCodeDev.NetCMS.Core\Shared\OpenCodeDev.NetCMS.Core.Shared.csproj", "{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CompileCMS|Any CPU = CompileCMS|Any CPU
@@ -42,6 +46,18 @@ Global
 		{32602D84-36F4-4DC1-8F89-465198A65A04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32602D84-36F4-4DC1-8F89-465198A65A04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32602D84-36F4-4DC1-8F89-465198A65A04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24CFE8B5-4339-4EB7-86B8-93476AC9D204}.CompileCMS|Any CPU.ActiveCfg = CompileCMS|Any CPU
+		{24CFE8B5-4339-4EB7-86B8-93476AC9D204}.CompileCMS|Any CPU.Build.0 = CompileCMS|Any CPU
+		{24CFE8B5-4339-4EB7-86B8-93476AC9D204}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24CFE8B5-4339-4EB7-86B8-93476AC9D204}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24CFE8B5-4339-4EB7-86B8-93476AC9D204}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24CFE8B5-4339-4EB7-86B8-93476AC9D204}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.CompileCMS|Any CPU.ActiveCfg = CompileCMS|Any CPU
+		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.CompileCMS|Any CPU.Build.0 = CompileCMS|Any CPU
+		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
