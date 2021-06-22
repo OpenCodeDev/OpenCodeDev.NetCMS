@@ -34,7 +34,10 @@
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" requireReinstallation="true" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OpenCodeDev.NetCMS.Core.Attributes\OpenCodeDev.NetCMS.Core.Attributes.csproj" />
+    <ProjectReference Include="..\OpenCodeDev.NetCMS.Core.Attributes\OpenCodeDev.NetCMS.Core.Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Api\_Core\Me\" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;CompileCMS&quot; (&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.AssemblyName&quot; &quot;$(AssemblyName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(RootNamespace)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.ProjectName&quot; &quot;$(ProjectName)&quot;&#xD;&#xA;)" />

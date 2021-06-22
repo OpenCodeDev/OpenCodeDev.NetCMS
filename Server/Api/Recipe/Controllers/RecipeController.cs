@@ -6,12 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Grpc.Core;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers
 {
     public class RecipeController : IRecipeController
     {
+
+        
 
         public async Task<object> Create(object request, CallContext context = default)
         {
@@ -25,7 +29,12 @@ namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers
 
         public async Task<List<RecipePublicModel>> Fetch(RecipeFetchRequest request, CallContext context = default)
         {
-            throw new NotImplementedException();
+           var provider =  context.ServerCallContext.GetHttpContext().RequestServices;
+           var db = provider.GetRequiredService<RecipeDatabase>();
+
+            Predicate<Models.RecipeModel> test1 = p => p.Id.Equals("");
+            Predicate<Models.RecipeModel> test2 = p => p.Duration.Equals("");
+            Predicate<Models.RecipeModel> test = p=> test1(p) && test2(p);
         }
 
 

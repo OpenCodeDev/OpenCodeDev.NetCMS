@@ -7,11 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Shared",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Server", "Server\OpenCodeDev.NetCms.Server.csproj", "{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Core", "Core\OpenCodeDev.NetCms.Core.csproj", "{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Client", "Client\OpenCodeDev.NetCMS.Client.csproj", "{3F448044-9593-4E07-A2BC-CFFB3E688381}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCms.Admin", "Admin\OpenCodeDev.NetCms.Admin.csproj", "{1CDECE89-22B2-42AF-A1F6-8735599D9167}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Core.Attributes", "OpenCodeDev.NetCMS.Core.Attributes\OpenCodeDev.NetCMS.Core.Attributes.csproj", "{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Admin", "Admin\OpenCodeDev.NetCMS.Admin.csproj", "{32602D84-36F4-4DC1-8F89-465198A65A04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,24 +30,18 @@ Global
 		{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}.Debug|Any CPU.Build.0 = CompileCMS|Any CPU
 		{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15C3BC7C-776B-4D78-99F2-DAC35E7C518A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.CompileCMS|Any CPU.ActiveCfg = CompileCMS|Any CPU
-		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.CompileCMS|Any CPU.Build.0 = CompileCMS|Any CPU
-		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.Debug|Any CPU.ActiveCfg = CompileCMS|Any CPU
-		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.Debug|Any CPU.Build.0 = CompileCMS|Any CPU
-		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{549BCB9F-3AC9-4E70-83D0-01B84F903CB7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.CompileCMS|Any CPU.ActiveCfg = CompileCMS|Any CPU
-		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.CompileCMS|Any CPU.Build.0 = CompileCMS|Any CPU
-		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Debug|Any CPU.ActiveCfg = CompileCMS|Any CPU
-		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Debug|Any CPU.Build.0 = CompileCMS|Any CPU
-		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1CDECE89-22B2-42AF-A1F6-8735599D9167}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.CompileCMS|Any CPU.ActiveCfg = CompileCMS|Any CPU
-		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.CompileCMS|Any CPU.Build.0 = CompileCMS|Any CPU
-		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.Debug|Any CPU.ActiveCfg = CompileCMS|Any CPU
-		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.Debug|Any CPU.Build.0 = CompileCMS|Any CPU
-		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9DCF76B-666D-4A5D-9FED-A3CF16556C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F448044-9593-4E07-A2BC-CFFB3E688381}.CompileCMS|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F448044-9593-4E07-A2BC-CFFB3E688381}.CompileCMS|Any CPU.Build.0 = Debug|Any CPU
+		{3F448044-9593-4E07-A2BC-CFFB3E688381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F448044-9593-4E07-A2BC-CFFB3E688381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F448044-9593-4E07-A2BC-CFFB3E688381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F448044-9593-4E07-A2BC-CFFB3E688381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32602D84-36F4-4DC1-8F89-465198A65A04}.CompileCMS|Any CPU.ActiveCfg = Debug|Any CPU
+		{32602D84-36F4-4DC1-8F89-465198A65A04}.CompileCMS|Any CPU.Build.0 = Debug|Any CPU
+		{32602D84-36F4-4DC1-8F89-465198A65A04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32602D84-36F4-4DC1-8F89-465198A65A04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32602D84-36F4-4DC1-8F89-465198A65A04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32602D84-36F4-4DC1-8F89-465198A65A04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

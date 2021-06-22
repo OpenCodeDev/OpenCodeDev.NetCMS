@@ -32,7 +32,8 @@ namespace OpenCodeDev.NetCms.Shared.Api._Core.Messages
         Float,
         Double,
         Bool,
-        Guid
+        Guid,
+        Long
     }
 
     /// <summary>

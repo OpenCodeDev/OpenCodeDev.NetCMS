@@ -1,4 +1,4 @@
-#OpenCodeDev.NetCMS
+# OpenCodeDev.NetCMS
 Open-Source .NET CMS Inspired of Hapi and Wordpress on many aspect and Strapi on Admin Side.
 
 Goal is to offer and easy way to create api tables, execute CRUD and set permission.
@@ -21,23 +21,24 @@ Lastly, while using strapi or wordpress it is great to have the administration b
 2. Use Reflection at Compile Time, Make File Changes Before Compile.
 3. Load Plugin at Runtime (Load Before server available) with Reflection.
 4. Try to make a system that will avoid Hook thru reflection (maybe squash everything in during compiling?)
+
 # Possible Roadmap
 ## 2021
-- Can Create GRPC/JSON Api routes and call its CRUD from GRPC and JSON POST/GET/PUT/DEL
-- Can Request 1 Depth Nested Relation to be return.
-- Can Fetch with Extensive Smart Search System.
-- Can Define and Set Public/Stric Private Model Fields.
-- Can Extend Administration Dashboard.
-- Support Plugin at Runtime.
-- Can Develop Back-End Plugins with Front-End (Dashboard).
-- Auto-Generate Basic Api Behavior (CRUD) with CLI.
+   - Can Create GRPC/JSON Api routes and call its CRUD from GRPC and JSON POST/GET/PUT/DEL
+   - Can Request 1 Depth Nested Relation to be return.
+   - Can Fetch with Extensive Smart Search System.
+   - Can Define and Set Public/Stric Private Model Fields.
+   - Can Extend Administration Dashboard.
+   - Support Plugin at Runtime.
+   - Can Develop Back-End Plugins with Front-End (Dashboard).
+   - Auto-Generate Basic Api Behavior (CRUD) with CLI.
 
 ## 2022
-- Completed Open-Source Client-Side.
-- Support for Deepnesting Level (Circular will be nulled).
-- Auto-Generated Basic Api Behavior (CRUD from Dashboard).
-- Fully Support Plugin at Runtime.
-- Thats all i could think of for the moment.
+   - Completed Open-Source Client-Side.
+   - Support for Deepnesting Level (Circular will be nulled).
+   - Auto-Generated Basic Api Behavior (CRUD from Dashboard).
+   - Fully Support Plugin at Runtime.
+   - Thats all i could think of for the moment.
 
 # NOTE TO MYSELF
 Config -> Json Routes (Grpc or Traditional Api) Grpc:true, WebApi: true, DataContext: "Name" (Relation must be same DbContext)
