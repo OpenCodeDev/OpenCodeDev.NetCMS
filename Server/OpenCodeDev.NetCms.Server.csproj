@@ -7,7 +7,7 @@
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
     <Configurations>Debug;Release;CompileCMS</Configurations>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <PreserveCompilationContext>true</PreserveCompilationContext>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CompileCMS|AnyCPU'">
@@ -39,9 +39,15 @@
     <Folder Include="DataContext\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Server\OpenCodeDev.NetCMS.Core.Server.csproj" />
-    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Shared\OpenCodeDev.NetCMS.Core.Shared.csproj" />
-    <ProjectReference Include="..\Shared\OpenCodeDev.NetCms.Shared.csproj" />
+    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Server\OpenCodeDev.NetCMS.Core.Server.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Shared\OpenCodeDev.NetCMS.Core.Shared.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\OpenCodeDev.NetCms.Shared.csproj">
+      <Private>true</Private>
+    </ProjectReference>
   </ItemGroup>
 
 

@@ -9,45 +9,54 @@ using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using OpenCodeDev.NetCms.Server.Api.Recipe.Services;
+using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated;
+using OpenCodeDev.NetCms.Server.Database;
 
 namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers
 {
     public class RecipeController : IRecipeController
     {
-
-        
-
-        public async Task<object> Create(object request, CallContext context = default)
+        public async Task<RecipePublicModel> Create(RecipeCreateRequest request, CallContext context = default)
         {
             throw new NotImplementedException();
         }
 
-        public async Task Delete(object request, CallContext context = default)
+        public async Task<RecipePublicModel> Delete(RecipeDeleteRequest request, CallContext context = default)
         {
             throw new NotImplementedException();
         }
 
         public async Task<List<RecipePublicModel>> Fetch(RecipeFetchRequest request, CallContext context = default)
         {
-           var provider =  context.ServerCallContext.GetHttpContext().RequestServices;
-           var db = provider.GetRequiredService<RecipeDatabase>();
+            var provider = context.ServerCallContext.GetHttpContext().RequestServices;
+            var db = provider.GetRequiredService<ApiDatabase>();
+            var myService = provider.GetRequiredService<RecipeMyService>();
 
-            Predicate<Models.RecipeModel> test1 = p => p.Id.Equals("");
-            Predicate<Models.RecipeModel> test2 = p => p.Duration.Equals("");
-            Predicate<Models.RecipeModel> test = p=> test1(p) && test2(p);
+            // Building Predicate Conditions
+            // Note: Reflection is being used and can be heavy when very large list of condition is given.
+            // you may want to restrict the number of condition, duplicate is allowed so the intent to slow the system can be used.
+            // By Default we allow 20 conditions longer than that will throw an error to protect the default system.
+            var predicate = myService.RecipeConditionHandler(request.Conditions);
+
+            // Execute Predicate on Database.
+            var result = db.Recipes.Where(p => predicate(p)).Select(p=>(RecipePublicModel)p).ToList();
+            return result;
         }
 
-
-
-        public async Task<object> FetchOne(object request, CallContext context = default)
+        public async Task<RecipePublicModel> FetchOne(RecipeFetchOneRequest request, CallContext context = default)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<object> Update(object request, CallContext context = default)
+        public async Task<RecipePublicModel> Update(RecipeUpdateOneRequest request, CallContext context = default)
         {
             throw new NotImplementedException();
         }
 
+        public async Task<List<RecipePublicModel>> UpdateMany(RecipeUpdateManyRequest request, CallContext context = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

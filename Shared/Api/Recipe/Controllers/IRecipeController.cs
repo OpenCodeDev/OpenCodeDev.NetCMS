@@ -1,6 +1,5 @@
-﻿
-using OpenCodeDev.NetCms.Shared.Api._Core.Messages;
-using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages;
+﻿using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages;
+using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Models;
 using ProtoBuf.Grpc;
 using System;
@@ -19,7 +18,7 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Controllers
         /// Create one entry (Do not use for register AuthenticationService provides it)
         /// </summary>
         [OperationContract]
-        Task<object> Create(object request, CallContext context = default);
+        Task<RecipePublicModel> Create(RecipeCreateRequest request, CallContext context = default);
 
         /// <summary>
         /// Fetch List with given filter
@@ -31,18 +30,24 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Controllers
         /// Fetch One by Given ID
         /// </summary>
         [OperationContract]
-        Task<object> FetchOne(object request, CallContext context = default);
+        Task<RecipePublicModel> FetchOne(RecipeFetchOneRequest request, CallContext context = default);
 
         /// <summary>
         /// Update a single entry
         /// </summary>
         [OperationContract]
-        Task<object> Update(object request, CallContext context = default);
+        Task<RecipePublicModel> Update(RecipeUpdateOneRequest request, CallContext context = default);
+
+        /// <summary>
+        /// Update Many Entries
+        /// </summary>
+        [OperationContract]
+        Task<List<RecipePublicModel>> UpdateMany(RecipeUpdateManyRequest request, CallContext context = default);
 
         /// <summary>
         /// Delete one entry
         /// </summary>
         [OperationContract]
-        Task Delete(object request, CallContext context = default);
+        Task<RecipePublicModel> Delete(RecipeDeleteRequest request, CallContext context = default);
     }
 }

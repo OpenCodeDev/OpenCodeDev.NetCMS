@@ -1,6 +1,6 @@
 {
   "Solution": {
-    "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCms\\",
+    "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCMS\\",
     "FileName": "OpenCodeDev.NetCMS.sln",
     "Version": "net5.0",
     "MSBuild": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\MSBuild\\Current\\Bin\\\\MSBuild.exe",
@@ -16,7 +16,7 @@
       "TargetFileName": "OpenCodeDev.NetCms.Admin"
     },
     "Server": {
-      "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCms\\Server\\",
+      "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCMS\\Server\\",
       "Project": "OpenCodeDev.NetCms.Server.csproj",
       "ProjectName": "OpenCodeDev.NetCms.Server",
       "AssemblyName": "OpenCodeDev.NetCms.Server",
@@ -24,7 +24,7 @@
       "TargetFileName": "OpenCodeDev.NetCms.Server.dll"
     },
     "Shared": {
-      "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCms\\Shared\\",
+      "Path": "C:\\Users\\Admin\\source\\repos\\OpenCodeDev.NetCMS\\Shared\\",
       "Project": "OpenCodeDev.NetCms.Shared.csproj",
       "ProjectName": "OpenCodeDev.NetCms.Shared",
       "AssemblyName": "OpenCodeDev.NetCms.Shared",

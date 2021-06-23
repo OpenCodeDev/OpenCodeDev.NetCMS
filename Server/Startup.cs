@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using OpenCodeDev.NetCms.Server.Api.Recipe.Controllers;
+using OpenCodeDev.NetCms.Server.Api.Recipe.Controllers._Generated;
+using OpenCodeDev.NetCms.Server.Database;
 using ProtoBuf.Grpc.Server;
 using System;
 using System.Collections.Generic;
@@ -42,7 +44,7 @@ namespace OpenCodeDev.NetCms.Server
 
             services.AddCodeFirstGrpc(config => { config.ResponseCompressionLevel = System.IO.Compression.CompressionLevel.Optimal; });
             //TODO: In Memory, Only During Testing
-            services.AddDbContext<RecipeDatabase>(x => x.UseInMemoryDatabase("RecipeDatabase"), ServiceLifetime.Transient);
+            services.AddDbContext<ApiDatabase>(x => x.UseInMemoryDatabase("RecipeDatabase"), ServiceLifetime.Transient);
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers();
@@ -73,7 +75,7 @@ namespace OpenCodeDev.NetCms.Server
             var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
             using (var serviceScope = serviceScopeFactory.CreateScope())
             {
-                var db = serviceScope.ServiceProvider.GetService<RecipeDatabase>();
+                var db = serviceScope.ServiceProvider.GetService<ApiDatabase>();
 
                 db.Database.EnsureCreated();
                 db.MockUp();
@@ -82,11 +84,12 @@ namespace OpenCodeDev.NetCms.Server
                 //db.EnsurePermissionsCreated(Configuration.GetSection("PermissionRoles").GetChildren().ToArray().Select(c => c.Value).ToArray());
             }
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGrpcService<RecipeController>().EnableGrpcWeb().RequireCors("AllowAll");
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(
+                endpoints =>
+                {
+                    endpoints.MapGrpcService<RecipeControllerWrapper>().EnableGrpcWeb().RequireCors("AllowAll");
+                    endpoints.MapControllers();
+                });
         }
     }
 }

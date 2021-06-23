@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
+namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated
 {
 
     /// <summary>
@@ -16,17 +16,10 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
     /// DO NOT EDIT...
     /// Inside Model check relations, if relation are available, add it here
     /// </summary>
-    [ProtoContract]
-
-    public class RecipeReference
+    public enum RecipeReferences
     {
-        /// <summary>
-        /// List of Reference that can be loaded
-        /// </summary>
-        public enum References {
-            All,
-            Account
-        }
-        
+        All,
+        Account
     }
+
 }
