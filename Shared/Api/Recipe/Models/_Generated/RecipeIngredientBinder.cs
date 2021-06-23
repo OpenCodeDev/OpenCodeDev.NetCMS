@@ -11,20 +11,26 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Models._Generated
 {
     // AUTO-GENERATED, DO NOT EDIT.
     [ProtoContract]
-    public class OneToZeroRecipeIngredients
+    public class RecipeIngredientBinder
     {
+        [Key]
+        [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "Id cannot be empty.")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+        public Guid Id { get; set; }
+
         [Required]
         [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "Id cannot be empty.")]
-        public Guid RecipeIdentifier { get; set; }
+        public Guid RecipeId { get; set; }
         
-        [ForeignKey("RecipeIdentifier")]
+        [ForeignKey("RecipeId")]
         public RecipePublicModel Recipe { get; set; }
 
         [Required]
         [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "Id cannot be empty.")]
-        public Guid IngredientIdentifier { get; set; }
+        public Guid IngredientId { get; set; }
 
-        [NotMapped]
-        public RecipePublicModel Ingredient { get; set; }
+        [ForeignKey("IngredientId")]
+        public IngredientModel Ingredient { get; set; }
     }
 }

@@ -11,6 +11,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated;
 using OpenCodeDev.NetCMS.Core.Shared.Extensions;
+using Microsoft.EntityFrameworkCore;
+using OpenCodeDev.NetCms.Server.Database._Generated;
+using OpenCodeDev.NetCms.Server.Api.Recipe.Models;
 
 /*
  * From NetCMS Template
@@ -66,6 +69,32 @@ namespace OpenCodeDev.NetCms.Server.Api.Recipe.Services._Generated
             return p => predFunc(p);
         }
 
+
+        public virtual IQueryable<RecipePublicModel> RecipeLoadReference(IQueryable<RecipePublicModel> model, RecipeReferences references){
+            return model.Include(p => p.Ingredients);
+        }
+
+
+        public virtual RecipeModel RecipeFilterUpdate(RecipeModel current, RecipeModel changed)
+        {
+            // Map Field allowed to change ignore everything else.
+            current.Duration = changed.Duration;
+            current.Name = changed.Name;
+            return current;
+        }
+
+        public virtual RecipeModel RecipeFilterUpdateReferences(DatabaseBase db, RecipeModel current, RecipeUpdateOneRequest request)
+        {
+            var _current = db.Recipes.Where(p => p.Id.Equals(current.Id)).First();
+
+            // List Each Reference, See Behavior
+            db.Entry(_current).Collection(p => p.Ingredients).Load();
+            if (request.ReferenceBehavior.Ingredients == ReferenceEditBehavior.Process)
+            {
+                
+            }
+            return current;
+        }
 
     }
 

@@ -17,7 +17,7 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated
         /// How to Behave? Default: Ignore.
         /// </summary>
         [ProtoMember(1)]
-        public ReferenceEditBehavior RefName { get; set; } = ReferenceEditBehavior.Ignore;
+        public ReferenceEditBehavior Ingredients { get; set; } = ReferenceEditBehavior.Ignore;
 
         List<Guid> RefX_ToUnlink { get; set; } = new List<Guid>();
         List<Guid> RefX_ToLink { get; set; } = new List<Guid>();

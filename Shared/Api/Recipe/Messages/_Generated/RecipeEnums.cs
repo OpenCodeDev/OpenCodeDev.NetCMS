@@ -19,7 +19,7 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated
     public enum RecipeReferences
     {
         All,
-        Account
+        Ingredients
     }
 
 }

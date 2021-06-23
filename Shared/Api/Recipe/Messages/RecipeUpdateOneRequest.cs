@@ -29,8 +29,9 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
         public RecipePublicModel Element { get; set; }
 
         /// <summary>
-        /// Unlink = Delete when One-to-One and Many-to-One Relationship, Unlist when (this)One-To-Many(other) and Many-to-Many. <br/>
-        /// Link = Only works for Many-to-Many and One-to-Many. Others are linked at the creation of the reference.<br/>
+        /// Note 1: Will remove any missing entities (Break Link, Auto-Delete if dependent) or entity (single reference and delete it)<br/>
+        /// Note 2: One to Zero will link entity if exist.<br/>
+        /// Note 3: Many to Zero will link entities by creating a binder which will be broken if any sides is deleted.
         /// </summary>
         [ProtoMember(3)]
         public RecipeUpdateRefBehavior ReferenceBehavior { get; set; } = new RecipeUpdateRefBehavior();

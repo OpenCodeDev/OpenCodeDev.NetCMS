@@ -37,6 +37,7 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Models
         public int Duration { get; set; }
 
         [ProtoMember(4)]
-        public ICollection<OneToZeroRecipeIngredients> Ingredients { get; set; }
+        public List<IngredientModel> Ingredients { get; set; }
+
     }
 }
