@@ -10,7 +10,7 @@ using Grpc.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OpenCodeDev.NetCms.Server.Api.Recipe.Services;
-using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated;
+using OpenCodeDev.NetCms.Shared._NetCMS_.Api.Recipe.Messages;
 using OpenCodeDev.NetCms.Server.Database;
 using OpenCodeDev.NetCms.Server.Api.Recipe.Models;
 
@@ -20,6 +20,7 @@ namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers
     {
         public async Task<RecipePublicModel> Create(RecipeCreateRequest request, CallContext context = default)
         {
+         
             throw new NotImplementedException();
         }
 

@@ -41,6 +41,7 @@ Lastly, while using strapi or wordpress it is great to have the administration b
    - Thats all i could think of for the moment.
 
 # NOTE TO MYSELF
+
 Config -> Json Routes (Grpc or Traditional Api) Grpc:true, WebApi: true, DataContext: "Name" (Relation must be same DbContext)
 Controllers -> Function are Called from (ControllerBase) by default.
 Models -> Model Information (Table) Fields and Relations initially from (Model[Name]Base)

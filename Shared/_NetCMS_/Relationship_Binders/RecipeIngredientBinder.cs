@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Models._Generated
 {
     // AUTO-GENERATED, DO NOT EDIT.
-    [ProtoContract]
     public class RecipeIngredientBinder
     {
         [Key]

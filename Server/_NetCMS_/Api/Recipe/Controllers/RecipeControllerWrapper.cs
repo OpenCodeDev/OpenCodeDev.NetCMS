@@ -1,15 +1,16 @@
 ﻿using Grpc.Core;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Controllers;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages;
-using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated;
+using OpenCodeDev.NetCms.Shared._NetCMS_.Api.Recipe.Messages;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Models;
 using ProtoBuf.Grpc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OpenCodeDev.NetCms.Server.Api.Recipe.Controllers;
 
-namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers._Generated
+namespace OpenCodeDev.NetCms.Server._NetCMS_.Api.Recipe.Controllers
 {
     //AUTO-GENERATED DO NOT EDIT.
     public class RecipeControllerWrapper : IRecipeController

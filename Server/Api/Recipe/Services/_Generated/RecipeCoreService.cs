@@ -9,7 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated;
+using OpenCodeDev.NetCms.Shared._NetCMS_.Api.Recipe.Messages;
 using OpenCodeDev.NetCMS.Core.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 using OpenCodeDev.NetCms.Server.Database._Generated;

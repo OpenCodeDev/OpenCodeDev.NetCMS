@@ -25,17 +25,17 @@ namespace OpenCodeDev.NetCMS.Admin.Pages
                 var authService = channel.CreateGrpcService<IRecipeController>();
                 Guid MyGuidTest = Guid.NewGuid();
 
-                CallContext callContext = new CallOptions();
+                //CallContext callContext = new CallOptions();
 
-                try
-                {
-                    await authService.FetchOne(MyGuidTest, callContext);
-                }
-                catch (RpcException ex)
-                {
-                    Console.WriteLine($"{ex.Status.Detail}");
+                //try
+                //{
+                //    await authService.FetchOne(MyGuidTest, callContext);
+                //}
+                //catch (RpcException ex)
+                //{
+                //    Console.WriteLine($"{ex.Status.Detail}");
     
-                }
+                //}
 
 
         }

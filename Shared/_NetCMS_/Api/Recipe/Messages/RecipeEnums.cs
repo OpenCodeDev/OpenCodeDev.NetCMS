@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated
+namespace OpenCodeDev.NetCms.Shared._NetCMS_.Api.Recipe.Messages
 {
 
     /// <summary>

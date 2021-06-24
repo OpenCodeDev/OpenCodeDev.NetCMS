@@ -33,12 +33,19 @@
     <PackageReference Include="protobuf-net.Grpc.AspNetCore" Version="1.0.152" requireReinstallation="true" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.11.0" requireReinstallation="true" />
     <PackageReference Include="System.Net.Security" Version="4.3.2" requireReinstallation="true" />
+    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="3.8.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\Recipe\Config\" />
+    <Folder Include="Api\Recipe\Controllers\_Generated\" />
     <Folder Include="DataContext\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\OpenCodeDev.NetCMS.Core.Compiler\OpenCodeDev.NetCMS.Core.Compiler.csproj" OutputItemType="Analyzer"
+			ReferenceOutputAssembly="false"/>
     <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Server\OpenCodeDev.NetCMS.Core.Server.csproj">
       <Private>true</Private>
     </ProjectReference>
@@ -49,6 +56,7 @@
       <Private>true</Private>
     </ProjectReference>
   </ItemGroup>
+
 
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

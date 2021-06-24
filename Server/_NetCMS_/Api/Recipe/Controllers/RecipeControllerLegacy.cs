@@ -13,7 +13,7 @@ namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers
 {
     [ApiController]
     [Route("/api/recipe")]
-    public class RecipeControllerLegacy: ControllerBase
+    public partial class RecipeControllerLegacy: ControllerBase
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         public RecipeControllerLegacy(IHttpContextAccessor httpContextAccessor){

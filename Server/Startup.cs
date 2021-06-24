@@ -10,21 +10,23 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using OpenCodeDev.NetCms.Server._NetCMS_.Api.Recipe.Controllers;
 using OpenCodeDev.NetCms.Server.Api.Recipe.Controllers;
-using OpenCodeDev.NetCms.Server.Api.Recipe.Controllers._Generated;
 using OpenCodeDev.NetCms.Server.Database;
 using ProtoBuf.Grpc.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using OpenCodeDev.NetCMS.Generated.Api.Recipe.Model;
 namespace OpenCodeDev.NetCms.Server
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
+            var t = new RecipesPublicModel();
+
             Configuration = configuration;
         }
 
@@ -55,6 +57,7 @@ namespace OpenCodeDev.NetCms.Server
             });
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -83,7 +86,8 @@ namespace OpenCodeDev.NetCms.Server
 
                 //db.EnsurePermissionsCreated(Configuration.GetSection("PermissionRoles").GetChildren().ToArray().Select(c => c.Value).ToArray());
             }
-
+            
+            
             app.UseEndpoints(
                 endpoints =>
                 {

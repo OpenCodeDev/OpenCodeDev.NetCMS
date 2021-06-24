@@ -1,5 +1,5 @@
 ﻿using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages;
-using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages._Generated;
+using OpenCodeDev.NetCms.Shared._NetCMS_.Api.Recipe.Messages;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Models;
 using ProtoBuf.Grpc;
 using System;

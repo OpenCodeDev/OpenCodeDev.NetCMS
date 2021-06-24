@@ -14,18 +14,16 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Models
     /// <summary>
     /// Public Field of Recipe Api (UnAllowed Field will be null)
     /// </summary>
+
     [Serializable]
     [ProtoContract]
-    public class RecipePublicModel
+    public partial class RecipePublicModel
     {
-        [Key]
-        [Column]
-        [Required]
+        [Key][Column][Required][ProtoMember(1)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "Id cannot be empty.")]
-        [ProtoMember(1)]
+        [RegularExpression("^((?!00000000-0000-0000-0000-000000000000).)*$", ErrorMessage = "Id cannot be empty.")]        
         public Guid Id { get; set; }
-
+        
         [Required]
         [Column]
         [ProtoMember(2)]
