@@ -18,15 +18,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using OpenCodeDev.NetCMS.Generated.Api.Recipe.Model;
+//using OpenCodeDev.NetCMS.Generated.Api.Recipe.Model;
 namespace OpenCodeDev.NetCms.Server
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
-            var t = new RecipesPublicModel();
-
+            //var t = new RecipesPublicModel();
             Configuration = configuration;
         }
 

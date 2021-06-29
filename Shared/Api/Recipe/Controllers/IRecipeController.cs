@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Controllers
 {
-    [ServiceContract]
+    [ServiceContract()]
     public interface IRecipeController
     {
         /// <summary>
         /// Create one entry (Do not use for register AuthenticationService provides it)
         /// </summary>
-        [OperationContract]
+        [OperationContract()]
         Task<RecipePublicModel> Create(RecipeCreateRequest request, CallContext context = default);
 
         /// <summary>

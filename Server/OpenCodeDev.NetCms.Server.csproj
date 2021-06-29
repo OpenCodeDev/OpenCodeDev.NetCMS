@@ -42,10 +42,9 @@
     <Folder Include="Api\Recipe\Config\" />
     <Folder Include="Api\Recipe\Controllers\_Generated\" />
     <Folder Include="DataContext\" />
+    <Folder Include="..\Configuration\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\OpenCodeDev.NetCMS.Core.Compiler\OpenCodeDev.NetCMS.Core.Compiler.csproj" OutputItemType="Analyzer"
-			ReferenceOutputAssembly="false"/>
     <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Server\OpenCodeDev.NetCMS.Core.Server.csproj">
       <Private>true</Private>
     </ProjectReference>
@@ -60,12 +59,12 @@
 
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="echo &quot;TEST AFTER&quot;" />
+    <Exec Command="echo &quot;$(ProjectDir)\test.json&quot;" />
   </Target>
 
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;CompileCMS&quot; (&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.ProjectName&quot; &quot;$(ProjectName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.AssemblyName&quot; &quot;$(AssemblyName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.TargetFileName&quot; &quot;$(RootNamespace)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Server.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Path&quot; &quot;$(SolutionDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.Version&quot; &quot;$(TargetFramework)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.FileName&quot; &quot;$(SolutionFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.EnvironmentPath&quot; &quot;$(DevEnvDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Solution.MSBuild&quot; &quot;$(MSBuildToolsPath)\\MSBuild.exe&quot;&#xD;&#xA;netcms build &quot;$(SolutionDir)\netcms.json&quot;&#xD;&#xA;)" />
+    <Exec Command="SET _testTargetDir=$(TargetDir)&#xD;&#xA;SET _targetDir=%25_testTargetDir:\=\\%25&#xD;&#xA;SET _testProjectDir=$(ProjectDir)&#xD;&#xA;SET _projectDir=%25_testProjectDir:\=\\%25&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\_Config_NetCMS\server.json&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\..\.netcms_config\server.json&#xD;&#xA;" />
   </Target>
 
 </Project>

@@ -11,6 +11,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CompileCMS|AnyCPU'">
     <OutputPath>bin\NetCMS\</OutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bin\**" />
+    <EmbeddedResource Remove="bin\**" />
+    <None Remove="bin\**" />
+  </ItemGroup>
   <ItemGroup>
 
     <PackageReference Include="Grpc.Core" Version="2.37.1" requireReinstallation="true" />
@@ -19,29 +25,37 @@
 
     <PackageReference Include="Grpc.Net.Client.Web" Version="2.37.0" requireReinstallation="true" />
 
-    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.5" requireReinstallation="true" />
+    <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.7" requireReinstallation="true" />
 
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" requireReinstallation="true" />
 
-    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.0" requireReinstallation="true" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.11.1" requireReinstallation="true" />
 
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" requireReinstallation="true" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 
     <PackageReference Include="OpenCodeDev.EntityFramework.Permissions.Grpc.DataAnnotations" Version="1.0.0" requireReinstallation="true" />
 
     <PackageReference Include="protobuf-net.Grpc" Version="1.0.152" requireReinstallation="true" />
-
+    <PackageReference Include="Microsoft.Net.Compilers.Toolset" Version="3.10.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" requireReinstallation="true" />
+    <None Remove="bin\Debug\net5.0\\OpenCodeDev.NetCms.Shared.dll" />
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
   <ItemGroup>
+
+    <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Compiler\Shared\OpenCodeDev.NetCMS.Compiler.Shared.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Shared\OpenCodeDev.NetCMS.Core.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Api\Recipe\Messages\_Generated\" />
     <Folder Include="_NetCMS_\Api\Recipe\Models\" />
+    <Folder Include="..\Configuration\" />
   </ItemGroup>
+
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="if &quot;$(ConfigurationName)&quot; == &quot;CompileCMS&quot; (&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Path&quot; &quot;$(ProjectDir)\&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.Project&quot; &quot;$(ProjectFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(TargetFileName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.AssemblyName&quot; &quot;$(AssemblyName)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.TargetFileName&quot; &quot;$(RootNamespace)&quot;&#xD;&#xA;netcms settings &quot;$(SolutionDir)\netcms.json&quot; update &quot;Trio.Shared.ProjectName&quot; &quot;$(ProjectName)&quot;&#xD;&#xA;)" />
+    <Exec Command="SET _testTargetDir=$(TargetDir)&#xD;&#xA;SET _targetDir=%25_testTargetDir:\=\\%25&#xD;&#xA;SET _testProjectDir=$(ProjectDir)&#xD;&#xA;SET _projectDir=%25_testProjectDir:\=\\%25&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\_Config_NetCMS\shared.json&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\..\.netcms_config\shared.json&#xD;&#xA;if not exist &quot;%25APPDATA%25\NetCMS\&quot; mkdir %25APPDATA%25\NetCMS&#xD;&#xA;echo $(SolutionDir) &gt; %25APPDATA%25\NetCMS\$(TargetName).txt&#xD;&#xA;echo &quot;Settings are Generated:&quot; %25APPDATA%25\NetCMS\$(TargetName).txt&#xD;&#xA;" />
   </Target>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="echo   &quot;$(ConfigurationName)&quot;" />

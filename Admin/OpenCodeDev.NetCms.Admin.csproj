@@ -20,6 +20,9 @@
     <PackageReference Include="Grpc.Net.Client.Web" Version="2.37.0" />
 
   </ItemGroup>
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="SET _testTargetDir=$(TargetDir)&#xD;&#xA;SET _targetDir=%25_testTargetDir:\=\\%25&#xD;&#xA;SET _testProjectDir=$(ProjectDir)&#xD;&#xA;SET _projectDir=%25_testProjectDir:\=\\%25&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\_Config_NetCMS\admin.json&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\..\.netcms_config\admin.json&#xD;&#xA;" />
+  </Target>
 
 
 </Project>

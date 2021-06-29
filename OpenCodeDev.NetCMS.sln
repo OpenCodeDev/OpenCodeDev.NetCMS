@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Core.Ser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Core.Shared", "..\OpenCodeDev.NetCMS.Core\Shared\OpenCodeDev.NetCMS.Core.Shared.csproj", "{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Compiler.Shared", "..\OpenCodeDev.NetCMS.Compiler\Shared\OpenCodeDev.NetCMS.Compiler.Shared.csproj", "{D939047B-D2FE-41AF-A699-ADEE6A2631F1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenCodeDev.NetCMS.Compiler.Core", "..\OpenCodeDev.NetCMS.Compiler\Core\OpenCodeDev.NetCMS.Compiler.Core.csproj", "{2DB23C47-38DF-4750-AACC-4CDD39115B67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CompileCMS|Any CPU = CompileCMS|Any CPU
@@ -56,6 +60,18 @@ Global
 		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCD9A3E9-FB2C-4C07-823B-C2CE17D671CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D939047B-D2FE-41AF-A699-ADEE6A2631F1}.CompileCMS|Any CPU.ActiveCfg = Debug|Any CPU
+		{D939047B-D2FE-41AF-A699-ADEE6A2631F1}.CompileCMS|Any CPU.Build.0 = Debug|Any CPU
+		{D939047B-D2FE-41AF-A699-ADEE6A2631F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D939047B-D2FE-41AF-A699-ADEE6A2631F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D939047B-D2FE-41AF-A699-ADEE6A2631F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D939047B-D2FE-41AF-A699-ADEE6A2631F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DB23C47-38DF-4750-AACC-4CDD39115B67}.CompileCMS|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DB23C47-38DF-4750-AACC-4CDD39115B67}.CompileCMS|Any CPU.Build.0 = Debug|Any CPU
+		{2DB23C47-38DF-4750-AACC-4CDD39115B67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DB23C47-38DF-4750-AACC-4CDD39115B67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DB23C47-38DF-4750-AACC-4CDD39115B67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DB23C47-38DF-4750-AACC-4CDD39115B67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
