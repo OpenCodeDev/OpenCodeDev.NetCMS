@@ -50,7 +50,6 @@
     <ProjectReference Include="..\..\OpenCodeDev.NetCMS.Core\Shared\OpenCodeDev.NetCMS.Core.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="_NetCMS_\Api\Recipe\Models\" />
     <Folder Include="..\Configuration\" />
   </ItemGroup>
 

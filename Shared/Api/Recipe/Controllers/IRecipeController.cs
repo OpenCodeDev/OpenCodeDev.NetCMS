@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Controllers
 {
     [ServiceContract()]
-    public interface IRecipeController
+    public partial interface IRecipeController
     {
         /// <summary>
         /// Create one entry (Do not use for register AuthenticationService provides it)
