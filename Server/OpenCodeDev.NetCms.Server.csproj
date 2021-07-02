@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\Recipe\Config\" />
-    <Folder Include="Api\Recipe\Controllers\_Generated\" />
+    <Folder Include="Database\_Generated\" />
     <Folder Include="DataContext\" />
     <Folder Include="..\Configuration\" />
   </ItemGroup>

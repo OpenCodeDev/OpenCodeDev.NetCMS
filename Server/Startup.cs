@@ -90,7 +90,7 @@ namespace OpenCodeDev.NetCms.Server
             app.UseEndpoints(
                 endpoints =>
                 {
-                    endpoints.MapGrpcService<RecipeControllerWrapper>().EnableGrpcWeb().RequireCors("AllowAll");
+                    endpoints.MapGrpcService<RecipeControllerEndpoints>().EnableGrpcWeb().RequireCors("AllowAll");
                     endpoints.MapControllers();
                 });
         }

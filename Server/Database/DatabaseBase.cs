@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Models._Generated;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Models;
 
-namespace OpenCodeDev.NetCms.Server.Database._Generated
+namespace OpenCodeDev.NetCms.Server.Database
 {
     // Auto Generated DO NOT EDIT
     public class DatabaseBase : DbContext

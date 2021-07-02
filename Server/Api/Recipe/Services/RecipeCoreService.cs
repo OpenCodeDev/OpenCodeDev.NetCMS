@@ -39,25 +39,20 @@ namespace OpenCodeDev.NetCms.Server.Api.Recipe.Services._Generated
         /// <param name="conditions">List of condition</param>
         public virtual Predicate<RecipePublicModel> RecipeConditionHandler(List<RecipePredicateCondition> conditions)
         {
+            Type _PublicModel = typeof(RecipePublicModel);
             Expression<Func<RecipePublicModel, bool>> predicate = PredicateBuilder.True<RecipePublicModel>();
             LogicTypes nextLogicToFollow = LogicTypes.And;
             bool nextFollowsLogic = false;
-            foreach (var item in conditions)
-            {
-                PropertyInfo fieldInfo = typeof(RecipePublicModel).GetPropertyInfoByName(item.Field.ToString()) // Get Property by Name
-                .ThrowWhenNull<PropertyInfo>(StatusCode.Unknown, $"The condition field {item.Field} is not available in the condition of fetch model. (You most likely need to update your client or wait several hours for next update deployment.")
-                .ValidateTypeMatch(item.Type.ToSystemString()) // Validate Intented Field/Type Matches Real Type.
-                .ThrowWhenNull<PropertyInfo>(StatusCode.Unknown, $"The underlying type does not match the intended type... this is due to a mistake (most common), outdated client or more serious engine problem.");
-                
+            foreach (var item in conditions) {
+                PropertyInfo fieldInfo = _PublicModel.GetPropertyInfoByName(item.Field.ToString()) // Get Property by Name
+                .ThrowWhenNull<PropertyInfo>(StatusCode.Unknown, $"The condition field {item.Field} is not available in the condition of fetch model. (You most likely need to update your client or wait several hours for next update deployment.");
                 fieldInfo.ValidationPropTypeAllowed() // Ensure Underlying type is allowed to be considered a condition.
                 .ThrowWhenFalse(StatusCode.InvalidArgument, $"The condition field {item.Field} is not supported type for condition of fetch.");
                
                 if (!nextFollowsLogic || nextLogicToFollow == LogicTypes.And)
                 {
                     predicate = predicate.And(p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, item.Type));
-                }
-                else
-                {
+                } else {
                     predicate = predicate.Or(p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, item.Type));
 
                 }

@@ -13,7 +13,7 @@ using OpenCodeDev.NetCms.Server.Api.Recipe.Controllers;
 namespace OpenCodeDev.NetCms.Server._NetCMS_.Api.Recipe.Controllers
 {
     //AUTO-GENERATED DO NOT EDIT.
-    public class RecipeControllerWrapper : IRecipeController
+    public partial class RecipeControllerEndpoints : IRecipeController
     {
         public virtual async Task<RecipePublicModel> Create(RecipeCreateRequest request, CallContext context = default)
         {
@@ -62,8 +62,8 @@ namespace OpenCodeDev.NetCms.Server._NetCMS_.Api.Recipe.Controllers
             catch (Exception ex)
             {
                 //TODO: IDEA ?  Create a grpc error handler at core base, whenever error is thrown during request,
-                // error is related to the core system and every plugin register all error handling with messages then core return grpc error to throw.
-                // Example: Stripe would register StripeException, so whenever a plugin uses stripe and throw that error, catch this to print a more accurate msg for user.
+                // error is relayed to the core system and every plugin register all error handling with messages then core return grpc error to throw.
+                // Example: Stripe would register StripeException, so whenever a plugin uses stripe and throw that error, catch this to print a more accurate msg for user from the plugin in question.
                 Console.WriteLine(ex.Message);
                 throw new RpcException(new Status(StatusCode.Unknown, "Unknown error occured"));
             }

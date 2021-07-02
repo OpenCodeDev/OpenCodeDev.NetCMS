@@ -1,11 +1,7 @@
 ﻿using OpenCodeDev.NetCms.Shared._NetCMS_.Api.Recipe.Messages;
 using ProtoBuf;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
 {

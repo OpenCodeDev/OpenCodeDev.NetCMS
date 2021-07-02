@@ -16,7 +16,7 @@ using Grpc.Core;
 
 namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers
 {
-    public partial class RecipeControllerLegacy : ControllerBase
+    public partial class RecipeControllerLegacyEndpoints : ControllerBase
     {
         // You can add extra routes here.
     }
