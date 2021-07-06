@@ -15,35 +15,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
     public class ServiceCoreTest : ApiServiceBase
     {
 
-        [TestMethod]
-        public void Test_Greather_Than_True_1()
-        {
-            Assert.IsTrue(GreaterThan(true, false));
-        }
 
-        [TestMethod]
-        public void Test_Greather_Than_True_2()
-        {
-            Assert.IsFalse(GreaterThan(false, true));
-        }
-
-        [TestMethod]
-        public void Test_Greather_Than_Int_1()
-        {
-            Assert.IsTrue(GreaterThan(3, 2));
-        }
-
-        [TestMethod]
-        public void Test_Greather_Than_Int_2()
-        {
-            Assert.IsFalse(GreaterThan(3, 6));
-        }
-
-        [TestMethod]
-        public void Test_Greather_Than_Int_3()
-        {
-            Assert.IsFalse(GreaterThan(3, 3));
-        }
 
         [TestMethod]
         public void Test_Predicate_Builder(){
@@ -58,7 +30,11 @@ namespace OpenCodeDev.NetCMS.Server.Test
             };
             TestFetchRequest conditions = new TestFetchRequest() { 
                 Conditions = new List<TestPredicateConditions>() { 
-                 new TestPredicateConditions(){ Type= FieldTypes.Int, Conditions = ConditionTypes.GreaterThan, Field = TestPredicateConditions.Fields.Duration, NextLogic = LogicTypes.And, Value = "1" }
+                 new TestPredicateConditions(){ 
+                 Type= FieldTypes.Int, 
+                 Conditions = ConditionTypes.GreaterThan, 
+                 Field = TestPredicateConditions.Fields.Duration, 
+                 NextLogic = LogicTypes.And, Value = "1" }
                 },
                 Limit = 10
             };
