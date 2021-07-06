@@ -35,7 +35,7 @@ namespace OpenCodeDev.NetCms.Server.Api.Recipe.Controllers
             
             }
             CallContext cContext = new CallOptions(headers);
-            RecipeController grpcController = new RecipeController();
+            RecipeMyController grpcController = new RecipeMyController();
             return new List<RecipePublicModel>();
         }
     }

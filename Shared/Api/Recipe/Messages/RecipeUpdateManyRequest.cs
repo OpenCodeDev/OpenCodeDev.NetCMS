@@ -13,7 +13,7 @@ namespace OpenCodeDev.NetCms.Shared.Api.Recipe.Messages
     /// When one fails, server will return an object with a list of all changes if succeded or not.
     /// </summary>
     [ProtoContract]
-    public class RecipeUpdateManyRequest
+    public partial class RecipeUpdateManyRequest
     {
         /// <summary>
         /// Default Limit is 20 Items per request... beyond that, server will return resource exhausted.

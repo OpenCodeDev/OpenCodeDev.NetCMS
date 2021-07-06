@@ -1,3 +1,5 @@
+//_NETCMS_HEADER_
+
 using Grpc.Core;
 using System;
 using System.Collections.Generic;
@@ -7,12 +9,21 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-/*
- * From NetCMS Template
- * Created by Max Samson
- * AUTO GENERATED (DO NOT EDIT)
- * Base on Core System Api Services.
- */
+//NetCMS Server Core System
+using OpenCodeDev.NetCMS.Core.Server.Api;
+
+//NetCMS Shared Core System
+using OpenCodeDev.NetCMS.Core.Shared.Api.Messages;
+using OpenCodeDev.NetCMS.Core.Shared.Extensions;
+
+// Code Namespaces
+using _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models;
+using _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages;
+
+// Server Resources
+using _NAMESPACE_BASE_SERVER_.Database;
+using _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Models;
+
 namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
 {
 
@@ -29,10 +40,10 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
         /// Condition Search Predicate Builder for Context of RecipeController
         /// </summary>
         /// <param name="conditions">List of condition</param>
-        public virtual Predicate<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel> _API_NAME_ConditionHandler(List<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages._API_NAME_PredicateCondition> conditions)
+        public virtual Predicate<_API_NAME_PublicModel> ConditionsPredicateBuilder(List<_API_NAME_PredicateConditions> conditions)
         {
-            Type _PublicModel = typeof(_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel);
-            Expression<Func<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel, bool>> predicate = PredicateBuilder.True<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel>();
+            Type _PublicModel = typeof(_API_NAME_PublicModel);
+            Expression<Func<_API_NAME_PublicModel, bool>> predicate = PredicateBuilder.True<_API_NAME_PublicModel>();
             LogicTypes nextLogicToFollow = LogicTypes.And;
             bool nextFollowsLogic = false;
             foreach (var item in conditions) {
@@ -52,23 +63,23 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
                 nextFollowsLogic = true; // Next Loop will use nextLogic as predicate behavior
             }
 
-            Func<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel, bool> predFunc = predicate.Compile();
+            Func<_API_NAME_PublicModel, bool> predFunc = predicate.Compile();
             return p => predFunc(p);
         }
 
 
-        // public virtual IQueryable<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel> RecipeLoadReference(IQueryable<NAMESPACE_BASE_SHARED.Api._API_NAME_.Models._API_NAME_PublicModel> model, RecipeReferences references){
+        // public virtual IQueryable<_API_NAME_PublicModel> RecipeLoadReference(IQueryable<NAMESPACE_BASE_SHARED.Api._API_NAME_.Models._API_NAME_PublicModel> model, RecipeReferences references){
         //     return model.Include(p => p.Ingredients);
         // }
 
         
-        public virtual _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Models._API_NAME_Model _API_NAME_FilterUpdate(_NAMESPACE_BASE_SERVER_.Api._API_NAME_.Models._API_NAME_Model current, NAMESPACE_BASE_SERVER.Api._API_NAME_.Models._API_NAME_Model changed)
+        public virtual _API_NAME_Model FilterUpdate(_API_NAME_Model current, _API_NAME_Model changed)
         {
-            _UPDATE_FILTER_BODY_
+            //_UPDATE_FILTER_BODY_
             return current;
         }
 
-        public virtual _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Models._API_NAME_Model _API_NAME_FilterUpdateReferences(_NAMESPACE_BASE_SERVER_.Database.DatabaseBase db, NAMESPACE_BASE_SERVER.Api._API_NAME_.Models._API_NAME_Model current, NAMESPACE_SHARED_SERVER.Api_API_NAME_.Messages._API_NAME_UpdateOneRequest request)
+        public virtual _API_NAME_Model FilterUpdateReferences(DatabaseBase db, _API_NAME_Model current, _API_NAME_UpdateOneRequest request)
         {
             // var _current = db._API_NAME_.Where(p => p.Id.Equals(current.Id)).First();
 

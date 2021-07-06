@@ -42,6 +42,13 @@
     </PackageReference>
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.8.1" requireReinstallation="true" />
     <None Remove="bin\Debug\net5.0\\OpenCodeDev.NetCms.Shared.dll" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Controllers.IRecipeController.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeCreateRequest.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeFetchOneRequest.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeFetchRequest.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipePredicateConditions.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeUpdateOneRequest.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Models.RecipePublicModel.cs" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
   </ItemGroup>
   <ItemGroup>
@@ -51,10 +58,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="..\Configuration\" />
+    <Folder Include="Api\Recipe\Controllers\" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="SET _testTargetDir=$(TargetDir)&#xD;&#xA;SET _targetDir=%25_testTargetDir:\=\\%25&#xD;&#xA;SET _testProjectDir=$(ProjectDir)&#xD;&#xA;SET _projectDir=%25_testProjectDir:\=\\%25&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\_Config_NetCMS\shared.json&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\..\.netcms_config\shared.json&#xD;&#xA;if not exist &quot;%25APPDATA%25\NetCMS\&quot; mkdir %25APPDATA%25\NetCMS&#xD;&#xA;echo $(SolutionDir) &gt; %25APPDATA%25\NetCMS\$(TargetName).txt&#xD;&#xA;echo &quot;Settings are Generated:&quot; %25APPDATA%25\NetCMS\$(TargetName).txt&#xD;&#xA;" />
+    <Exec Command="SET _testTargetDir=$(TargetDir)&#xD;&#xA;SET _targetDir=%25_testTargetDir:\=\\%25&#xD;&#xA;SET _testProjectDir=$(ProjectDir)&#xD;&#xA;SET _projectDir=%25_testProjectDir:\=\\%25&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\_Config_NetCMS\shared.json&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\..\.netcms_config\shared.json&#xD;&#xA;if not exist &quot;%25APPDATA%25\NetCMS\&quot; mkdir %25APPDATA%25\NetCMS&#xD;&#xA;echo $(SolutionDir) &gt; %25APPDATA%25\NetCMS\$(TargetName).txt&#xD;&#xA;echo &quot;Settings are Generated:&quot; %25APPDATA%25\NetCMS\$(TargetName).txt&#xD;&#xA;echo &quot;Copying Generated Files&quot;&#xD;&#xA;robocopy /MIR $(SolutionDir).netcms_config\generated\shared $(ProjectDir)\.generated" />
   </Target>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="echo   &quot;$(ConfigurationName)&quot;" />

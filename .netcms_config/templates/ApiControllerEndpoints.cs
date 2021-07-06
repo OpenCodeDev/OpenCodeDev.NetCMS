@@ -1,3 +1,5 @@
+//_NETCMS_HEADER_
+
 using Grpc.Core;
 using ProtoBuf.Grpc;
 using System;
@@ -5,12 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// Code Namespaces
+using _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models;
+using _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages;
+using _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Controllers;
+
+// DO NOT EDIT, REGENERATED AT EACH BUILD.
+
 namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
 {
-    //AUTO-GENERATED DO NOT EDIT.
-    public partial class _API_NAME_ControllerEndpoints : _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Controllers.I_API_NAME_Controller
+    /// <summary>
+    /// Provides with Api Controller's wrapper mainly for permission, authentication and other operation required to process request. <br/>
+    /// If you use a custom endpoint, you will have to see the official documentation to call permission and auth functions
+    /// </summary>
+    public partial class _API_NAME_ControllerEndpoints : I_API_NAME_Controller
     {
-        public virtual async Task<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel> Create(_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages._API_NAME_CreateRequest request, CallContext context = default)
+        public virtual async Task<_API_NAME_PublicModel> Create(_API_NAME_CreateRequest request, CallContext context = default)
         {
             // Check for Permissions, Check for Field Permission
             // Check for ApiKey Permission, Check for Account Role Permissions
@@ -39,7 +51,7 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
             }
         }
 
-        public virtual async Task<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel> Delete(_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages._API_NAME_DeleteRequest request, CallContext context = default)
+        public virtual async Task<_API_NAME_PublicModel> Delete(_API_NAME_DeleteRequest request, CallContext context = default)
         {
             try
             {
@@ -64,7 +76,7 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
             }
         }
 
-        public virtual async Task<List<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel>> Fetch(_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages._API_NAME_FetchRequest request, CallContext context = default)
+        public virtual async Task<List<_API_NAME_PublicModel>> Fetch(_API_NAME_FetchRequest request, CallContext context = default)
         {
             try
             {
@@ -89,7 +101,7 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
             }
         }
 
-        public virtual async Task<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel> FetchOne(_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages._API_NAME_FetchOneRequest request, CallContext context = default)
+        public virtual async Task<_API_NAME_PublicModel> FetchOne(_API_NAME_FetchOneRequest request, CallContext context = default)
         {
             try
             {
@@ -114,7 +126,7 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
             }
         }
 
-        public virtual async Task<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel> Update(_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages._API_NAME_UpdateOneRequest request, CallContext context = default)
+        public virtual async Task<_API_NAME_PublicModel> Update(_API_NAME_UpdateOneRequest request, CallContext context = default)
         {
             try
             {
@@ -139,7 +151,7 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
             }
         }
 
-        public virtual async Task<List<_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models._API_NAME_PublicModel>> UpdateMany(_NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages._API_NAME_UpdateManyRequest request, CallContext context = default)
+        public virtual async Task<List<_API_NAME_PublicModel>> UpdateMany(_API_NAME_UpdateManyRequest request, CallContext context = default)
         {
             try
             {

@@ -10,19 +10,20 @@ using OpenCodeDev.NetCms.Shared.Api.Recipe.Models;
 namespace OpenCodeDev.NetCms.Server.Database
 {
     // Auto Generated DO NOT EDIT
-    public class DatabaseBase : DbContext
+    public class _DatabaseBase : DbContext
     {
         public virtual DbSet<RecipeModel> Recipes { get; set; }
         public virtual DbSet<RecipeIngredientBinder> RecipeIngredientBinders { get; set; }
 
         public virtual DbSet<TestModel> TestModel { get; set; }
         public virtual DbSet<IngredientModel> Ingredients { get; set; }
-        public DatabaseBase(DbContextOptions options) : base(options) { }
+        public _DatabaseBase(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // Link Multiple Ingredients One-Way
             // Many To Zero (If Recipe is Link to Removed)
+
             builder.Entity<RecipeModel>()
             .HasMany(p => p.Ingredients)
             .WithOne(p => (RecipeModel)p.Recipe)
