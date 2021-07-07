@@ -29,12 +29,23 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Test-Name" }
             };
             TestFetchRequest conditions = new TestFetchRequest() { 
-                Conditions = new List<TestPredicateConditions>() { 
-                 new TestPredicateConditions(){ 
-                 Type= FieldTypes.Int, 
-                 Conditions = ConditionTypes.GreaterThan, 
-                 Field = TestPredicateConditions.Fields.Duration, 
-                 NextLogic = LogicTypes.And, Value = "1" }
+                Conditions = new List<TestPredicateConditions>() {
+                 new TestPredicateConditions(){
+                         Conditions = ConditionTypes.GreaterEqualThan,
+                         Field = TestPredicateConditions.Fields.Duration,
+                         NextLogic = LogicTypes.And, Value = "1"
+                    },
+                 new TestPredicateConditions(){
+                         Conditions = ConditionTypes.EndsWith,
+                         Field = TestPredicateConditions.Fields.Name,
+                         NextLogic = LogicTypes.And, Value = "Crooks"
+                    },
+                 new TestPredicateConditions(){
+                         Conditions = ConditionTypes.Equals,
+                         Field = TestPredicateConditions.Fields.Id,
+                         NextLogic = LogicTypes.Or, Value = predicedID.ToString()
+                    },
+
                 },
                 Limit = 10
             };
@@ -74,15 +85,15 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
                 if (!nextFollowsLogic)
                 {
-                    predicate = p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetType());
+                    predicate = p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible());
                 }
                 else if (nextLogicToFollow == LogicTypes.And)
                 {
-                    predicate = predicate.And(p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetType()));
+                    predicate = predicate.And(p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible()));
                 }
                 else
                 {
-                    predicate = predicate.Or(p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetType()));
+                    predicate = predicate.Or(p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible()));
 
                 }
 
