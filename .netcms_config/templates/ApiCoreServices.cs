@@ -42,29 +42,66 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
         /// <param name="conditions">List of condition</param>
         public virtual Predicate<_API_NAME_PublicModel> ConditionsPredicateBuilder(List<_API_NAME_PredicateConditions> conditions)
         {
-            Type _PublicModel = typeof(_API_NAME_PublicModel);
-            Expression<Func<_API_NAME_PublicModel, bool>> predicate = PredicateBuilder.True<_API_NAME_PublicModel>();
-            LogicTypes nextLogicToFollow = LogicTypes.And;
             bool nextFollowsLogic = false;
-            foreach (var item in conditions) {
-                PropertyInfo fieldInfo = _PublicModel.GetPropertyInfoByName(item.Field.ToString()) // Get Property by Name
-                .ThrowWhenNull<PropertyInfo>(StatusCode.Unknown, $"The condition field {item.Field} is not available in the condition of fetch model. (You most likely need to update your client or wait several hours for next update deployment.");
-                fieldInfo.ValidationPropTypeAllowed() // Ensure Underlying type is allowed to be considered a condition.
-                .ThrowWhenFalse(StatusCode.InvalidArgument, $"The condition field {item.Field} is not supported type for condition of fetch.");
-               
-                if (!nextFollowsLogic || nextLogicToFollow == LogicTypes.And)
+            LogicTypes? nextBreakingLogic  = null;
+            Expression<Func<_API_NAME_PublicModel, bool>> expr = null;
+            Expression<Func<_API_NAME_PublicModel, bool>> currentExpr = null;
+            foreach (var item in conditions)
+            {
+                Expression<Func<_API_NAME_PublicModel, bool>> nonRelationField = p => ConditionTypeDelegator(item.Conditions,
+                    p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value,
+                    p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible());
+
+                if (!nextFollowsLogic)
                 {
-                    predicate = predicate.And(p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, item.Type));
-                } else {
-                    predicate = predicate.Or(p => ConditionTypeDelegator(item.Conditions, p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value, item.Type));
+                    currentExpr = nonRelationField;
 
                 }
-
+                else if (item.LogicalOperator == LogicTypes.And || item.LogicalOperator == LogicTypes.Or)
+                {
+                    if (expr == null) { expr = currentExpr; }
+                    else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
+                    {
+                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    }
+                    else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
+                    {
+                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    }
+                    currentExpr = nonRelationField;
+                    nextBreakingLogic = item.LogicalOperator == LogicTypes.And ? LogicTypes.And : LogicTypes.Or;
+                }
+                else if (item.LogicalOperator == LogicTypes.AndAlso)
+                {
+                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
+                    Expression.AndAlso(currentExpr.Body,
+                    new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
+                        .Visit(nonRelationField.Body)), currentExpr.Parameters);
+                }
+                else if (item.LogicalOperator == LogicTypes.OrElse)
+                {
+                    currentExpr =  Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
+                    Expression.OrElse(currentExpr.Body,
+                    new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
+                        .Visit(nonRelationField.Body)), currentExpr.Parameters);
+                }
                 nextFollowsLogic = true; // Next Loop will use nextLogic as predicate behavior
             }
 
-            Func<_API_NAME_PublicModel, bool> predFunc = predicate.Compile();
-            return p => predFunc(p);
+            if (currentExpr != null)
+            {
+                if (expr == null) { expr = currentExpr; }
+                else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
+                {
+                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                }
+                else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
+                {
+                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                }
+            }
+                Func<_API_NAME_PublicModel, bool> predFunc = expr.Compile();
+                return p => predFunc(p);
         }
 
 
