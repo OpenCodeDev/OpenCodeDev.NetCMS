@@ -7,20 +7,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 
 namespace OpenCodeDev.NetCMS.Server.Test
 {
     [TestClass]
-    public class ServiceCoreTest : ApiServiceBase
+    public class ServiceCoreTest
     {
 
 
-
-        [TestMethod]
-        public void Test_Predicate_Builder(){
+        /// <summary>
+        /// Get row by ID
+        /// </summary>
+        [TestMethod("Test 1 Set of Condition")]
+        [TestCategory("Predicate Builder")]
+        public void Test_Predicate_Builder()
+        {
             Guid predicedID = Guid.NewGuid();
-            List<TestModel> DbSet = new List<TestModel>() { 
+            List<TestModel> DbSet = new List<TestModel>() {
                 new TestModel() { Id = predicedID, Duration = 1, Name = "Half-Crooks" },
                 new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "NetCMS.OpenCodeDev.com" },
                 new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Half-Way-Crooked" },
@@ -28,35 +31,30 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "MS-Test" },
                 new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Test-Name" }
             };
-            TestFetchRequest conditions = new TestFetchRequest() { 
+            TestFetchRequest conditions = new TestFetchRequest()
+            {
                 Conditions = new List<TestPredicateConditions>() {
-                 new TestPredicateConditions(){
-                         Conditions = ConditionTypes.GreaterEqualThan,
-                         Field = TestPredicateConditions.Fields.Duration,
-                         LogicalOperator = LogicTypes.And, Value = "1"
-                    },
-                 new TestPredicateConditions(){
-                         Conditions = ConditionTypes.EndsWith,
-                         Field = TestPredicateConditions.Fields.Name,
-                         LogicalOperator = LogicTypes.And, Value = "Crooks"
-                    },
                  new TestPredicateConditions(){
                          Conditions = ConditionTypes.Equals,
                          Field = TestPredicateConditions.Fields.Id,
-                         LogicalOperator = LogicTypes.Or, Value = predicedID.ToString()
+                         Value = predicedID.ToString()
                     },
 
                 },
                 Limit = 10
             };
 
-            var predicate = ConditionsPredicateBuilder(conditions.Conditions);
-            List<TestModel> result = DbSet.Where(p => predicate(p)).ToList();
-            Assert.AreEqual<int>(1, result.Count);
+            TestModel result = DbSet.WhereConditionsMet(conditions.Conditions).Take(1).First();
+            TestModel resultCorrect = DbSet.Where(p => p.Id.Equals(predicedID)).Take(1).First();
+            Assert.AreEqual<TestModel>(result, resultCorrect);
 
         }
 
-        [TestMethod]
+        /// <summary>
+        /// Test 2 Sets of condition using OR statement
+        /// </summary>
+        [TestMethod("Test 2 Sets of Condition OR")]
+        [TestCategory("Predicate Builder")]
         public void Test_Predicate_Builder_2()
         {
             Guid predicedID = Guid.NewGuid();
@@ -73,7 +71,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 Conditions = new List<TestPredicateConditions>() {
                  new TestPredicateConditions(){
                          Conditions = ConditionTypes.GreaterEqualThan,
-                         Field = TestPredicateConditions.Fields.Duration, 
+                         Field = TestPredicateConditions.Fields.Duration,
                          Value = "1", LogicalOperator = LogicTypes.And
                     },
                  new TestPredicateConditions(){
@@ -95,17 +93,19 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 Limit = 10
             };
 
-            var predicate = ConditionsPredicateBuilder(conditions.Conditions);
-
-            List<TestModel> result = DbSet.Where(p => predicate(p)).ToList();
-            List<TestModel> result_correct = DbSet.Where(p => p.Duration >= int.Parse("1") && p.Name.EndsWith("Crooks") 
+            List<TestModel> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
+            List<TestModel> result_correct = DbSet.Where(p => p.Duration >= int.Parse("1") && p.Name.EndsWith("Crooks")
             || p.Id.Equals(Guid.Parse(predicedID.ToString())) && p.Name.StartsWith("Half")).ToList();
             // Ensure Consistent Result between COndition Builder and Actual Linq Facts
             foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
 
         }
 
-        [TestMethod]
+        /// <summary>
+        /// Test 2 Sets of condition with sub condition like (x = "1" && y = "2") || (x = "1" && (y = "4" || y = "5"))
+        /// </summary>
+        [TestMethod("Test 2 Sets of Condition + SubConditions")]
+        [TestCategory("Predicate Builder")]
         public void Test_Predicate_Builder_3()
         {
             Guid predicedID = Guid.NewGuid();
@@ -146,79 +146,65 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 Limit = 10
             };
 
-            var predicate = ConditionsPredicateBuilder(conditions.Conditions);
-
-            List<TestModel> result = DbSet.Where(p => predicate(p)).ToList();
-            List<TestModel> result_correct = DbSet.Where(p=> p.Name.StartsWith("Max") && p.Name.EndsWith("Of Israel") ||
+            List<TestModel> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
+            List<TestModel> result_correct = DbSet.Where(p => p.Name.StartsWith("Max") && p.Name.EndsWith("Of Israel") ||
             p.Name.StartsWith("Max") && p.Name.EndsWith("Ishiakel") || p.Name.EndsWith("Samson")).ToList();
             // Ensure Consistent Result between COndition Builder and Actual Linq Facts
             foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
 
         }
 
-        [TestMethod]
+        /// <summary>
+        /// Test 2 Sets of condition with sub condition like (x = "1" && y = "2") || (x = "1" && (y = "4" || y = "5"))
+        /// </summary>
+        [TestMethod("Test 0 Set of Condition, Return All")]
+        [TestCategory("Predicate Builder")]
         public void Test_Predicate_Builder_4()
         {
             Guid predicedID = Guid.NewGuid();
             List<TestModel> DbSet = new List<TestModel>() {
-                new TestModel() { Id = predicedID, Duration = 1, Name = "Half-Filled" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "NetCMS.OpenCodeDev.com" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "T-Way-Crooks" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 2, Name = "Fork-Repos" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "MS-Test" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Test-Crooks" }
+                new TestModel() { Id = predicedID, Duration = 1, Name = "Max Samson" },
+                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "David Of Israel" },
+                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Rabbi Jeremy Ishiakel" },
             };
             TestFetchRequest conditions = new TestFetchRequest()
             {
-                Conditions = new List<TestPredicateConditions>() {
-                 new TestPredicateConditions(){
-                         Conditions = ConditionTypes.GreaterEqualThan,
-                         Field = TestPredicateConditions.Fields.Duration,
-                         Value = "1", LogicalOperator = LogicTypes.And
-                    },
-                 new TestPredicateConditions(){
-                         Conditions = ConditionTypes.EndsWith,
-                         Field = TestPredicateConditions.Fields.Name,
-                         LogicalOperator = LogicTypes.AndAlso, Value = "Crooks"
-                    },
-                 new TestPredicateConditions(){
-                         Conditions = ConditionTypes.Equals,
-                         Field = TestPredicateConditions.Fields.Id,
-                         LogicalOperator = LogicTypes.Or, Value = predicedID.ToString()
-                    },
-                 new TestPredicateConditions(){
-                         Conditions = ConditionTypes.StartsWith,
-                         Field = TestPredicateConditions.Fields.Name,
-                         LogicalOperator = LogicTypes.AndAlso, Value = "Half"
-                    },
-                },
-                Limit = 1
+                Conditions = new List<TestPredicateConditions>() { },
+                Limit = 10
             };
 
-            var predicate = ConditionsPredicateBuilder(conditions.Conditions);
 
-            List<TestModel> result = DbSet.Where(p => predicate(p)).OrderBy(p => p.Name).Take(conditions.Limit).ToList();
-            List<TestModel> result_correct = DbSet.Where(p => p.Duration >= int.Parse("1") && p.Name.EndsWith("Crooks")
-            || p.Id.Equals(Guid.Parse(predicedID.ToString())) && p.Name.StartsWith("Half")).OrderBy(p=>p.Name).Take(conditions.Limit).ToList();
+            List<TestModel> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
+            List<TestModel> result_correct = DbSet.Where(p => p != null).ToList();
             // Ensure Consistent Result between COndition Builder and Actual Linq Facts
             foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
 
         }
 
-        
-        /// <summary>
-        /// Condition Search Predicate Builder for Context of RecipeController
-        /// </summary>
-        /// <param name="conditions">List of condition</param>
-        public virtual Predicate<TestPublicModel> ConditionsPredicateBuilder(List<TestPredicateConditions> conditions)
+
+        // public virtual IQueryable<RecipePublicModel> RecipeLoadReference(IQueryable<NAMESPACE_BASE_SHARED.Api.Recipe.Models.RecipePublicModel> model, RecipeReferences references){
+        //     return model.Include(p => p.Ingredients);
+        // }
+
+
+        public virtual TestPublicModel FilterUpdate(TestModel current, TestModel changed)
+        {
+            //_UPDATE_FILTER_BODY_
+            return current;
+        }
+    }
+    
+    public static class TestSearchExt{
+        public static IQueryable<TestModel> WhereConditionsMet(this IQueryable<TestModel> query, List<TestPredicateConditions> conditions)
         {
             bool nextFollowsLogic = false;
-            LogicTypes? nextBreakingLogic  = null;
+            ApiServiceBase myServiceBase = new ApiServiceBase();
+            LogicTypes? nextBreakingLogic = null;
             Expression<Func<TestPublicModel, bool>> expr = null;
             Expression<Func<TestPublicModel, bool>> currentExpr = null;
             foreach (var item in conditions)
             {
-                Expression<Func<TestPublicModel, bool>> nonRelationField = p => ConditionTypeDelegator(item.Conditions,
+                Expression<Func<TestPublicModel, bool>> nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions,
                     p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value,
                     p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible());
 
@@ -250,7 +236,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 }
                 else if (item.LogicalOperator == LogicTypes.OrElse)
                 {
-                    currentExpr =  Expression.Lambda<Func<TestPublicModel, bool>>(
+                    currentExpr = Expression.Lambda<Func<TestPublicModel, bool>>(
                     Expression.OrElse(currentExpr.Body,
                     new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
                         .Visit(nonRelationField.Body)), currentExpr.Parameters);
@@ -270,30 +256,82 @@ namespace OpenCodeDev.NetCMS.Server.Test
                     expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                 }
             }
-            try
-            {
-                Func<TestPublicModel, bool> predFunc = expr.Compile();
-                return p => predFunc(p);
-            }
-            catch (Exception ed)
-            {
-
-                throw;
-            }
+            // If no Condition load any 
+            expr = expr == null ? p => p != null : expr;
+            Func<TestPublicModel, bool> predFunc = expr.Compile();
+            return query.Where(p => predFunc(p));
         }
 
-
-        // public virtual IQueryable<RecipePublicModel> RecipeLoadReference(IQueryable<NAMESPACE_BASE_SHARED.Api.Recipe.Models.RecipePublicModel> model, RecipeReferences references){
-        //     return model.Include(p => p.Ingredients);
-        // }
-
-
-        public virtual TestPublicModel FilterUpdate(TestModel current, TestModel changed)
+        public static IEnumerable<TestModel> WhereConditionsMet(this IEnumerable<TestModel> query, List<TestPredicateConditions> conditions)
         {
-            //_UPDATE_FILTER_BODY_
-            return current;
+            bool nextFollowsLogic = false;
+            ApiServiceBase myServiceBase = new ApiServiceBase();
+            LogicTypes? nextBreakingLogic = null;
+            Expression<Func<TestPublicModel, bool>> expr = null;
+            Expression<Func<TestPublicModel, bool>> currentExpr = null;
+            foreach (var item in conditions)
+            {
+                Expression<Func<TestPublicModel, bool>> nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions,
+                    p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value,
+                    p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible());
+
+                if (!nextFollowsLogic)
+                {
+                    currentExpr = nonRelationField;
+
+                }
+                else if (item.LogicalOperator == LogicTypes.And || item.LogicalOperator == LogicTypes.Or)
+                {
+                    if (expr == null) { expr = currentExpr; }
+                    else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
+                    {
+                        expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    }
+                    else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
+                    {
+                        expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    }
+                    currentExpr = nonRelationField;
+                    nextBreakingLogic = item.LogicalOperator == LogicTypes.And ? LogicTypes.And : LogicTypes.Or;
+                }
+                else if (item.LogicalOperator == LogicTypes.AndAlso)
+                {
+                    currentExpr = Expression.Lambda<Func<TestPublicModel, bool>>(
+                    Expression.AndAlso(currentExpr.Body,
+                    new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
+                        .Visit(nonRelationField.Body)), currentExpr.Parameters);
+                }
+                else if (item.LogicalOperator == LogicTypes.OrElse)
+                {
+                    currentExpr = Expression.Lambda<Func<TestPublicModel, bool>>(
+                    Expression.OrElse(currentExpr.Body,
+                    new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
+                        .Visit(nonRelationField.Body)), currentExpr.Parameters);
+                }
+                nextFollowsLogic = true; // Next Loop will use nextLogic as predicate behavior
+            }
+
+            if (currentExpr != null)
+            {
+                if (expr == null) { expr = currentExpr; }
+                else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
+                {
+                    expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                }
+                else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
+                {
+                    expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                }
+            }
+            // If no Condition load any 
+            expr = expr == null ? p => p != null : expr;
+            Func<TestPublicModel, bool> predFunc = expr.Compile();
+            return query.Where(p => predFunc(p));
         }
+
     }
+
+
     public class TestPublicModel
     {
         public System.String Name { get; set; }
@@ -311,9 +349,6 @@ namespace OpenCodeDev.NetCMS.Server.Test
         public List<TestPredicateConditions> Conditions { get; set; }
         public System.Int32 Limit { get; set; }
     }
-
-
-
     public class TestPredicateConditions : ConditionBase
     {
         public Fields Field { get; set; }

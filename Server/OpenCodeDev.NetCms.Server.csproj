@@ -73,7 +73,7 @@
 
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="echo &quot;Start Pre-Build Events&quot;&#xD;&#xA;SET _testTargetDir=$(TargetDir)&#xD;&#xA;SET _targetDir=%25_testTargetDir:\=\\%25&#xD;&#xA;SET _testProjectDir=$(ProjectDir)&#xD;&#xA;SET _projectDir=%25_testProjectDir:\=\\%25&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\_Config_NetCMS\server.json&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\..\.netcms_config\server.json&#xD;&#xA;echo &quot;Copying Generated Files&quot;&#xD;&#xA;robocopy /MIR $(SolutionDir).netcms_config\generated\server $(ProjectDir)\.generated" />
+    <Exec Command="echo &quot;Start Pre-Build Events&quot;&#xD;&#xA;SET _testTargetDir=$(TargetDir)&#xD;&#xA;SET _targetDir=%25_testTargetDir:\=\\%25&#xD;&#xA;SET _testProjectDir=$(ProjectDir)&#xD;&#xA;SET _projectDir=%25_testProjectDir:\=\\%25&#xD;&#xA;echo {&quot;Namespace&quot;:&quot;$(TargetName)&quot;, &quot;RootCode&quot;:&quot;%25_projectDir%25&quot;, &quot;Output&quot;:&quot;%25_targetDir%25&quot;, &quot;Target&quot;:&quot;$(ConfigurationName)&quot;} &gt; $(ProjectDir)\..\.netcms_config\server.json&#xD;&#xA;echo &quot;Copying Generated Files&quot;&#xD;&#xA;robocopy /MIR $(SolutionDir).netcms_config\generated\server $(ProjectDir)\.generated" />
   </Target>
 
 </Project>
