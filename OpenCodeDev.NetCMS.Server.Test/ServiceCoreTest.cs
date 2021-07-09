@@ -23,20 +23,20 @@ namespace OpenCodeDev.NetCMS.Server.Test
         public void Test_Predicate_Builder()
         {
             Guid predicedID = Guid.NewGuid();
-            List<TestModel> DbSet = new List<TestModel>() {
-                new TestModel() { Id = predicedID, Duration = 1, Name = "Half-Crooks" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "NetCMS.OpenCodeDev.com" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Half-Way-Crooked" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 2, Name = "Fork-Repos" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "MS-Test" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Test-Name" }
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = predicedID, Duration = 1, Name = "Half-Crooks" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "NetCMS.OpenCodeDev.com" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "Half-Way-Crooked" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "Fork-Repos" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "MS-Test" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "Test-Name" }
             };
-            TestFetchRequest conditions = new TestFetchRequest()
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
             {
-                Conditions = new List<TestPredicateConditions>() {
-                 new TestPredicateConditions(){
+                Conditions = new List<_API_NAME_PredicateConditions>() {
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.Equals,
-                         Field = TestPredicateConditions.Fields.Id,
+                         Field = _API_NAME_PredicateConditions.Fields.Id,
                          Value = predicedID.ToString()
                     },
 
@@ -44,9 +44,9 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 Limit = 10
             };
 
-            TestModel result = DbSet.WhereConditionsMet(conditions.Conditions).Take(1).First();
-            TestModel resultCorrect = DbSet.Where(p => p.Id.Equals(predicedID)).Take(1).First();
-            Assert.AreEqual<TestModel>(result, resultCorrect);
+            _API_NAME_Model result = DbSet.WhereConditionsMet(conditions.Conditions).Take(1).First();
+            _API_NAME_Model resultCorrect = DbSet.Where(p => p.Id.Equals(predicedID)).Take(1).First();
+            Assert.AreEqual<_API_NAME_Model>(result, resultCorrect);
 
         }
 
@@ -58,43 +58,43 @@ namespace OpenCodeDev.NetCMS.Server.Test
         public void Test_Predicate_Builder_2()
         {
             Guid predicedID = Guid.NewGuid();
-            List<TestModel> DbSet = new List<TestModel>() {
-                new TestModel() { Id = predicedID, Duration = 1, Name = "Half-Filled" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "NetCMS.OpenCodeDev.com" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "T-Way-Crooks" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 2, Name = "Fork-Repos" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "MS-Test" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Test-Crooks" }
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = predicedID, Duration = 1, Name = "Half-Filled" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "NetCMS.OpenCodeDev.com" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "T-Way-Crooks" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "Fork-Repos" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "MS-Test" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "Test-Crooks" }
             };
-            TestFetchRequest conditions = new TestFetchRequest()
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
             {
-                Conditions = new List<TestPredicateConditions>() {
-                 new TestPredicateConditions(){
+                Conditions = new List<_API_NAME_PredicateConditions>() {
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.GreaterEqualThan,
-                         Field = TestPredicateConditions.Fields.Duration,
+                         Field = _API_NAME_PredicateConditions.Fields.Duration,
                          Value = "1", LogicalOperator = LogicTypes.And
                     },
-                 new TestPredicateConditions(){
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.EndsWith,
-                         Field = TestPredicateConditions.Fields.Name,
+                         Field = _API_NAME_PredicateConditions.Fields.Name,
                          LogicalOperator = LogicTypes.AndAlso, Value = "Crooks"
                     },
-                 new TestPredicateConditions(){
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.Equals,
-                         Field = TestPredicateConditions.Fields.Id,
+                         Field = _API_NAME_PredicateConditions.Fields.Id,
                          LogicalOperator = LogicTypes.Or, Value = predicedID.ToString()
                     },
-                 new TestPredicateConditions(){
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.StartsWith,
-                         Field = TestPredicateConditions.Fields.Name,
+                         Field = _API_NAME_PredicateConditions.Fields.Name,
                          LogicalOperator = LogicTypes.AndAlso, Value = "Half"
                     },
                 },
                 Limit = 10
             };
 
-            List<TestModel> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
-            List<TestModel> result_correct = DbSet.Where(p => p.Duration >= int.Parse("1") && p.Name.EndsWith("Crooks")
+            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
+            List<_API_NAME_Model> result_correct = DbSet.Where(p => p.Duration >= int.Parse("1") && p.Name.EndsWith("Crooks")
             || p.Id.Equals(Guid.Parse(predicedID.ToString())) && p.Name.StartsWith("Half")).ToList();
             // Ensure Consistent Result between COndition Builder and Actual Linq Facts
             foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
@@ -109,45 +109,45 @@ namespace OpenCodeDev.NetCMS.Server.Test
         public void Test_Predicate_Builder_3()
         {
             Guid predicedID = Guid.NewGuid();
-            List<TestModel> DbSet = new List<TestModel>() {
-                new TestModel() { Id = predicedID, Duration = 1, Name = "Max Samson" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "David Of Israel" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Rabbi Jeremy Ishiakel" },
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = predicedID, Duration = 1, Name = "Max Samson" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "David Of Israel" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "Rabbi Jeremy Ishiakel" },
             };
-            TestFetchRequest conditions = new TestFetchRequest()
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
             {
-                Conditions = new List<TestPredicateConditions>() {
-                 new TestPredicateConditions(){
+                Conditions = new List<_API_NAME_PredicateConditions>() {
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.StartsWith, // Review Greater Equal from String
-                         Field = TestPredicateConditions.Fields.Name,
+                         Field = _API_NAME_PredicateConditions.Fields.Name,
                          Value = "Max"
                     },
-                 new TestPredicateConditions(){
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.EndsWith,
-                         Field = TestPredicateConditions.Fields.Name,
+                         Field = _API_NAME_PredicateConditions.Fields.Name,
                          LogicalOperator = LogicTypes.AndAlso, Value = "Of Israel"
                     },
-                 new TestPredicateConditions(){
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.StartsWith,
-                         Field = TestPredicateConditions.Fields.Name,
+                         Field = _API_NAME_PredicateConditions.Fields.Name,
                          LogicalOperator = LogicTypes.Or, Value = "Max"
                     },
-                 new TestPredicateConditions(){
+                 new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.EndsWith,
-                         Field = TestPredicateConditions.Fields.Name,
+                         Field = _API_NAME_PredicateConditions.Fields.Name,
                          LogicalOperator = LogicTypes.AndAlso, Value = "Ishiakel"
                     },
-                    new TestPredicateConditions(){
+                    new _API_NAME_PredicateConditions(){
                          Conditions = ConditionTypes.EndsWith,
-                         Field = TestPredicateConditions.Fields.Name,
+                         Field = _API_NAME_PredicateConditions.Fields.Name,
                          LogicalOperator = LogicTypes.OrElse, Value = "Samson"
                     },
                 },
                 Limit = 10
             };
 
-            List<TestModel> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
-            List<TestModel> result_correct = DbSet.Where(p => p.Name.StartsWith("Max") && p.Name.EndsWith("Of Israel") ||
+            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
+            List<_API_NAME_Model> result_correct = DbSet.Where(p => p.Name.StartsWith("Max") && p.Name.EndsWith("Of Israel") ||
             p.Name.StartsWith("Max") && p.Name.EndsWith("Ishiakel") || p.Name.EndsWith("Samson")).ToList();
             // Ensure Consistent Result between COndition Builder and Actual Linq Facts
             foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
@@ -162,49 +162,103 @@ namespace OpenCodeDev.NetCMS.Server.Test
         public void Test_Predicate_Builder_4()
         {
             Guid predicedID = Guid.NewGuid();
-            List<TestModel> DbSet = new List<TestModel>() {
-                new TestModel() { Id = predicedID, Duration = 1, Name = "Max Samson" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "David Of Israel" },
-                new TestModel() { Id = Guid.NewGuid(), Duration = 1, Name = "Rabbi Jeremy Ishiakel" },
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = predicedID, Duration = 1, Name = "Max Samson" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "David Of Israel" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "Rabbi Jeremy Ishiakel" },
             };
-            TestFetchRequest conditions = new TestFetchRequest()
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
             {
-                Conditions = new List<TestPredicateConditions>() { },
+                Conditions = new List<_API_NAME_PredicateConditions>() { },
                 Limit = 10
             };
 
 
-            List<TestModel> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
-            List<TestModel> result_correct = DbSet.Where(p => p != null).ToList();
+            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
+            List<_API_NAME_Model> result_correct = DbSet.Where(p => p != null).ToList();
             // Ensure Consistent Result between COndition Builder and Actual Linq Facts
             foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
 
         }
 
-
-        // public virtual IQueryable<RecipePublicModel> RecipeLoadReference(IQueryable<NAMESPACE_BASE_SHARED.Api.Recipe.Models.RecipePublicModel> model, RecipeReferences references){
-        //     return model.Include(p => p.Ingredients);
-        // }
-
-
-        public virtual TestPublicModel FilterUpdate(TestModel current, TestModel changed)
+        [TestMethod("Test Ordering Asc then Desc")]
+        [TestCategory("Predicate Builder")]
+        public void Test_Predicate_OrderBy_Builder_1()
         {
-            //_UPDATE_FILTER_BODY_
-            return current;
+            Guid predicedID = Guid.NewGuid();
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 3, Name = "A" },
+            };
+
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
+            {
+                Conditions = new List<_API_NAME_PredicateConditions>() { },
+                OrderBy = new List<_API_NAME_PredicateOrdering>() { 
+                new _API_NAME_PredicateOrdering() { Field = _API_NAME_PredicateOrdering.Fields.Name, Order = OrderType.Ascending }, 
+                new _API_NAME_PredicateOrdering() { Field = _API_NAME_PredicateOrdering.Fields.Duration, Order = OrderType.Descending },
+                },
+                Limit = 10
+            };
+
+
+            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).OrderByMatching(conditions.OrderBy).ToList();
+            List<_API_NAME_Model> result_correct = DbSet.Where(p => p != null).OrderBy(p=>p.Name).ThenByDescending(p=>p.Duration).ToList();
+            // Ensure Consistent Result between COndition Builder and Actual Linq Facts
+            foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
+
+        }
+
+        [TestMethod("Test Ordering Asc then Desc")]
+        [TestCategory("Predicate Builder")]
+        public void Test_Predicate_OrderBy_Builder_2()
+        {
+            Guid predicedID = Guid.NewGuid();
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 3, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "B" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "B" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 3, Name = "B" },
+            };
+
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
+            {
+                Conditions = new List<_API_NAME_PredicateConditions>() { },
+                OrderBy = new List<_API_NAME_PredicateOrdering>() {
+                new _API_NAME_PredicateOrdering() { Field = _API_NAME_PredicateOrdering.Fields.Name, Order = OrderType.Descending },
+                new _API_NAME_PredicateOrdering() { Field = _API_NAME_PredicateOrdering.Fields.Duration, Order = OrderType.Ascending },
+                },
+                Limit = 10
+            };
+
+
+            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).OrderByMatching(conditions.OrderBy).ToList();
+            List<_API_NAME_Model> result_correct = DbSet.Where(p => p != null).OrderByDescending(p => p.Name).ThenBy(p => p.Duration).ToList();
+            // Ensure Consistent Result between COndition Builder and Actual Linq Facts
+            Assert.AreEqual<int>(result.Count, result_correct.Count);
+            foreach (var cRez in result_correct) {
+                Assert.IsTrue(result.Contains(cRez));
+                Assert.IsTrue(result.IndexOf(cRez) == result_correct.IndexOf(cRez));
+            }
+
         }
     }
-    
-    public static class TestSearchExt{
-        public static IQueryable<TestModel> WhereConditionsMet(this IQueryable<TestModel> query, List<TestPredicateConditions> conditions)
+
+    public static class API_NAME_SearchExt
+    {
+        public static IQueryable<_API_NAME_Model> WhereConditionsMet(this IQueryable<_API_NAME_Model> query, List<_API_NAME_PredicateConditions> conditions)
         {
             bool nextFollowsLogic = false;
             ApiServiceBase myServiceBase = new ApiServiceBase();
             LogicTypes? nextBreakingLogic = null;
-            Expression<Func<TestPublicModel, bool>> expr = null;
-            Expression<Func<TestPublicModel, bool>> currentExpr = null;
+            Expression<Func<_API_NAME_PublicModel, bool>> expr = null;
+            Expression<Func<_API_NAME_PublicModel, bool>> currentExpr = null;
             foreach (var item in conditions)
             {
-                Expression<Func<TestPublicModel, bool>> nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions,
+                Expression<Func<_API_NAME_PublicModel, bool>> nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions,
                     p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value,
                     p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible());
 
@@ -218,25 +272,25 @@ namespace OpenCodeDev.NetCMS.Server.Test
                     if (expr == null) { expr = currentExpr; }
                     else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
                     {
-                        expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                     }
                     else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
                     {
-                        expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                     }
                     currentExpr = nonRelationField;
                     nextBreakingLogic = item.LogicalOperator == LogicTypes.And ? LogicTypes.And : LogicTypes.Or;
                 }
                 else if (item.LogicalOperator == LogicTypes.AndAlso)
                 {
-                    currentExpr = Expression.Lambda<Func<TestPublicModel, bool>>(
+                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
                     Expression.AndAlso(currentExpr.Body,
                     new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
                         .Visit(nonRelationField.Body)), currentExpr.Parameters);
                 }
                 else if (item.LogicalOperator == LogicTypes.OrElse)
                 {
-                    currentExpr = Expression.Lambda<Func<TestPublicModel, bool>>(
+                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
                     Expression.OrElse(currentExpr.Body,
                     new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
                         .Visit(nonRelationField.Body)), currentExpr.Parameters);
@@ -249,29 +303,29 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 if (expr == null) { expr = currentExpr; }
                 else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
                 {
-                    expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                 }
                 else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
                 {
-                    expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                 }
             }
             // If no Condition load any 
             expr = expr == null ? p => p != null : expr;
-            Func<TestPublicModel, bool> predFunc = expr.Compile();
+            Func<_API_NAME_PublicModel, bool> predFunc = expr.Compile();
             return query.Where(p => predFunc(p));
         }
 
-        public static IEnumerable<TestModel> WhereConditionsMet(this IEnumerable<TestModel> query, List<TestPredicateConditions> conditions)
+        public static IEnumerable<_API_NAME_Model> WhereConditionsMet(this IEnumerable<_API_NAME_Model> query, List<_API_NAME_PredicateConditions> conditions)
         {
             bool nextFollowsLogic = false;
             ApiServiceBase myServiceBase = new ApiServiceBase();
             LogicTypes? nextBreakingLogic = null;
-            Expression<Func<TestPublicModel, bool>> expr = null;
-            Expression<Func<TestPublicModel, bool>> currentExpr = null;
+            Expression<Func<_API_NAME_PublicModel, bool>> expr = null;
+            Expression<Func<_API_NAME_PublicModel, bool>> currentExpr = null;
             foreach (var item in conditions)
             {
-                Expression<Func<TestPublicModel, bool>> nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions,
+                Expression<Func<_API_NAME_PublicModel, bool>> nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions,
                     p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value,
                     p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible());
 
@@ -285,25 +339,25 @@ namespace OpenCodeDev.NetCMS.Server.Test
                     if (expr == null) { expr = currentExpr; }
                     else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
                     {
-                        expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                     }
                     else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
                     {
-                        expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                     }
                     currentExpr = nonRelationField;
                     nextBreakingLogic = item.LogicalOperator == LogicTypes.And ? LogicTypes.And : LogicTypes.Or;
                 }
                 else if (item.LogicalOperator == LogicTypes.AndAlso)
                 {
-                    currentExpr = Expression.Lambda<Func<TestPublicModel, bool>>(
+                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
                     Expression.AndAlso(currentExpr.Body,
                     new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
                         .Visit(nonRelationField.Body)), currentExpr.Parameters);
                 }
                 else if (item.LogicalOperator == LogicTypes.OrElse)
                 {
-                    currentExpr = Expression.Lambda<Func<TestPublicModel, bool>>(
+                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
                     Expression.OrElse(currentExpr.Body,
                     new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
                         .Visit(nonRelationField.Body)), currentExpr.Parameters);
@@ -316,23 +370,77 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 if (expr == null) { expr = currentExpr; }
                 else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
                 {
-                    expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                 }
                 else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
                 {
-                    expr = Expression.Lambda<Func<TestPublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                 }
             }
             // If no Condition load any 
             expr = expr == null ? p => p != null : expr;
-            Func<TestPublicModel, bool> predFunc = expr.Compile();
+            Func<_API_NAME_PublicModel, bool> predFunc = expr.Compile();
             return query.Where(p => predFunc(p));
+        }
+
+        public static IOrderedEnumerable<_API_NAME_Model> OrderFieldConvert(this IEnumerable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
+        {
+            switch (field)
+            {
+                case _API_NAME_PredicateOrdering.Fields.Id:
+                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Id) : query.OrderByDescending(p => p.Id);
+                case _API_NAME_PredicateOrdering.Fields.Name:
+                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Name) : query.OrderByDescending(p => p.Name);
+                case _API_NAME_PredicateOrdering.Fields.Duration:
+                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Duration) : query.OrderByDescending(p => p.Duration);
+            }
+            return null;
+        }
+
+        public static IOrderedEnumerable<_API_NAME_Model> OrderFieldConvert(this IOrderedEnumerable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
+        {
+            switch (field)
+            {
+                case _API_NAME_PredicateOrdering.Fields.Id:
+                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Id) : query.ThenByDescending(p => p.Id);
+                case _API_NAME_PredicateOrdering.Fields.Name:
+                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Name) : query.ThenByDescending(p => p.Name);
+                case _API_NAME_PredicateOrdering.Fields.Duration:
+                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Duration) : query.ThenByDescending(p => p.Duration);
+                default:
+                    return query;
+            }
+        }
+        public static IEnumerable<_API_NAME_Model> OrderByMatching(this IEnumerable<_API_NAME_Model> query, List<_API_NAME_PredicateOrdering> order)
+        {
+            bool notFirst = false;
+            ApiServiceBase myServiceBase = new ApiServiceBase();
+            IOrderedEnumerable<_API_NAME_Model> ordering = null;
+            foreach (var item in order)
+            {
+                if (!notFirst)
+                {
+                    ordering = query.OrderFieldConvert(item.Field, item.Order);
+                    notFirst = true;
+                }
+                else
+                {
+                    ordering = ordering.OrderFieldConvert(item.Field, item.Order);
+                }             
+            }
+
+            if (ordering == null)
+            {
+                return query;
+            }
+
+            return ordering;
         }
 
     }
 
 
-    public class TestPublicModel
+    public class _API_NAME_PublicModel
     {
         public System.String Name { get; set; }
         public System.Int32 Duration { get; set; }
@@ -340,16 +448,18 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
     }
 
-    public class TestModel : TestPublicModel
+    public class _API_NAME_Model : _API_NAME_PublicModel
     {
 
     }
-    public class TestFetchRequest
+    public class _API_NAME_FetchRequest
     {
-        public List<TestPredicateConditions> Conditions { get; set; }
+        public List<_API_NAME_PredicateConditions> Conditions { get; set; }
+        public List<_API_NAME_PredicateOrdering> OrderBy { get; set; }
+
         public System.Int32 Limit { get; set; }
     }
-    public class TestPredicateConditions : ConditionBase
+    public class _API_NAME_PredicateConditions : ConditionBase
     {
         public Fields Field { get; set; }
         public enum Fields
@@ -375,4 +485,34 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
 
     }
+
+    public class _API_NAME_PredicateOrdering : OrderByBase
+    {
+        public Fields Field { get; set; }
+        public enum Fields
+        {
+            Id,
+            Name,
+            Duration
+        }
+
+        public Type GetFieldType()
+        {
+            switch (Field)
+            {
+                case Fields.Id:
+                    return typeof(System.Guid);
+                case Fields.Name:
+                    return typeof(System.String);
+                case Fields.Duration:
+                    return typeof(System.Int32);
+            }
+            throw new RpcException(new Status(StatusCode.Unknown, "Server misconfiguration tries to pass un supported type of data, contact support."));
+        }
+
+
+    }
+
+
+
 }
