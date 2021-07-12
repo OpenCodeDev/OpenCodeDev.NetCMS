@@ -19,7 +19,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
         /// Get row by ID
         /// </summary>
         [TestMethod("Test 1 Set of Condition")]
-        [TestCategory("Predicate Builder")]
+        [TestCategory("Condition Builder")]
         public void Test_Predicate_Builder()
         {
             Guid predicedID = Guid.NewGuid();
@@ -54,7 +54,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
         /// Test 2 Sets of condition using OR statement
         /// </summary>
         [TestMethod("Test 2 Sets of Condition OR")]
-        [TestCategory("Predicate Builder")]
+        [TestCategory("Condition Builder")]
         public void Test_Predicate_Builder_2()
         {
             Guid predicedID = Guid.NewGuid();
@@ -105,7 +105,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
         /// Test 2 Sets of condition with sub condition like (x = "1" && y = "2") || (x = "1" && (y = "4" || y = "5"))
         /// </summary>
         [TestMethod("Test 2 Sets of Condition + SubConditions")]
-        [TestCategory("Predicate Builder")]
+        [TestCategory("Condition Builder")]
         public void Test_Predicate_Builder_3()
         {
             Guid predicedID = Guid.NewGuid();
@@ -158,7 +158,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
         /// Test 2 Sets of condition with sub condition like (x = "1" && y = "2") || (x = "1" && (y = "4" || y = "5"))
         /// </summary>
         [TestMethod("Test 0 Set of Condition, Return All")]
-        [TestCategory("Predicate Builder")]
+        [TestCategory("Condition Builder")]
         public void Test_Predicate_Builder_4()
         {
             Guid predicedID = Guid.NewGuid();
@@ -181,8 +181,8 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
         }
 
-        [TestMethod("Test Ordering Asc then Desc")]
-        [TestCategory("Predicate Builder")]
+        [TestMethod("OrderBy Name=>ASC Then Duration=>DESC")]
+        [TestCategory("OrderBy Builder")]
         public void Test_Predicate_OrderBy_Builder_1()
         {
             Guid predicedID = Guid.NewGuid();
@@ -205,13 +205,17 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
             List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).OrderByMatching(conditions.OrderBy).ToList();
             List<_API_NAME_Model> result_correct = DbSet.Where(p => p != null).OrderBy(p=>p.Name).ThenByDescending(p=>p.Duration).ToList();
-            // Ensure Consistent Result between COndition Builder and Actual Linq Facts
-            foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
+            Assert.AreEqual<int>(result.Count, result_correct.Count);
+            foreach (var cRez in result_correct)
+            {
+                Assert.IsTrue(result.Contains(cRez));
+                Assert.IsTrue(result.IndexOf(cRez) == result_correct.IndexOf(cRez));
+            }
 
         }
 
-        [TestMethod("Test Ordering Asc then Desc")]
-        [TestCategory("Predicate Builder")]
+        [TestMethod("OrderBy Name=>DESC Then Duration=>ASC")]
+        [TestCategory("OrderBy Builder")]
         public void Test_Predicate_OrderBy_Builder_2()
         {
             Guid predicedID = Guid.NewGuid();
@@ -245,10 +249,89 @@ namespace OpenCodeDev.NetCMS.Server.Test
             }
 
         }
+
+        [TestMethod("OrderBy Name=>DESC Then Duration=>DESC")]
+        [TestCategory("OrderBy Builder")]
+        public void Test_Predicate_OrderBy_Builder_3()
+        {
+            Guid predicedID = Guid.NewGuid();
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 3, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "B" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "B" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 3, Name = "B" },
+            };
+
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
+            {
+                Conditions = new List<_API_NAME_PredicateConditions>() { },
+                OrderBy = new List<_API_NAME_PredicateOrdering>() {
+                new _API_NAME_PredicateOrdering() { Field = _API_NAME_PredicateOrdering.Fields.Name, Order = OrderType.Descending },
+                new _API_NAME_PredicateOrdering() { Field = _API_NAME_PredicateOrdering.Fields.Duration, Order = OrderType.Descending },
+                },
+                Limit = 10
+            };
+
+
+            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).OrderByMatching(conditions.OrderBy).ToList();
+            List<_API_NAME_Model> result_correct = DbSet.Where(p => p != null).OrderByDescending(p => p.Name).ThenByDescending(p => p.Duration).ToList();
+            // Ensure Consistent Result between COndition Builder and Actual Linq Facts
+            Assert.AreEqual<int>(result.Count, result_correct.Count);
+            foreach (var cRez in result_correct)
+            {
+                Assert.IsTrue(result.Contains(cRez));
+                Assert.IsTrue(result.IndexOf(cRez) == result_correct.IndexOf(cRez));
+            }
+
+        }
+
+        [TestMethod("OrderBy Duration=>DESC Then Name=>ASC")]
+        [TestCategory("OrderBy Builder")]
+        public void Test_Predicate_OrderBy_Builder_4()
+        {
+            Guid predicedID = Guid.NewGuid();
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 3, Name = "A" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "B" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 2, Name = "B" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 3, Name = "B" },
+            };
+
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
+            {
+                Conditions = new List<_API_NAME_PredicateConditions>() { },
+                OrderBy = new List<_API_NAME_PredicateOrdering>() {
+                new _API_NAME_PredicateOrdering() { Field = _API_NAME_PredicateOrdering.Fields.Duration, Order = OrderType.Descending },
+                new _API_NAME_PredicateOrdering() { Field = _API_NAME_PredicateOrdering.Fields.Name, Order = OrderType.Ascending },
+                
+                },
+                Limit = 10
+            };
+
+
+            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).OrderByMatching(conditions.OrderBy).ToList();
+            List<_API_NAME_Model> result_correct = DbSet.Where(p => p != null).OrderByDescending(p => p.Duration).ThenBy(p => p.Name).ToList();
+            // Ensure Consistent Result between COndition Builder and Actual Linq Facts
+            Assert.AreEqual<int>(result.Count, result_correct.Count);
+            foreach (var cRez in result_correct)
+            {
+                Assert.IsTrue(result.Contains(cRez));
+                Assert.IsTrue(result.IndexOf(cRez) == result_correct.IndexOf(cRez));
+            }
+
+        }
+
     }
 
     public static class API_NAME_SearchExt
     {
+        /// <summary>
+        /// Query where given field condition are met.
+        /// </summary>
         public static IQueryable<_API_NAME_Model> WhereConditionsMet(this IQueryable<_API_NAME_Model> query, List<_API_NAME_PredicateConditions> conditions)
         {
             bool nextFollowsLogic = false;
@@ -316,6 +399,9 @@ namespace OpenCodeDev.NetCMS.Server.Test
             return query.Where(p => predFunc(p));
         }
 
+        /// <summary>
+        /// Query where given field condition are met.
+        /// </summary>
         public static IEnumerable<_API_NAME_Model> WhereConditionsMet(this IEnumerable<_API_NAME_Model> query, List<_API_NAME_PredicateConditions> conditions)
         {
             bool nextFollowsLogic = false;
@@ -383,6 +469,9 @@ namespace OpenCodeDev.NetCMS.Server.Test
             return query.Where(p => predFunc(p));
         }
 
+        /// <summary>
+        /// Convert user given field to real backing field from model.json and sort it by given direction.
+        /// </summary>
         public static IOrderedEnumerable<_API_NAME_Model> OrderFieldConvert(this IEnumerable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
         {
             switch (field)
@@ -397,6 +486,9 @@ namespace OpenCodeDev.NetCMS.Server.Test
             return null;
         }
 
+        /// <summary>
+        /// Convert user given field to real backing field from model.json and sort it by given direction.
+        /// </summary>
         public static IOrderedEnumerable<_API_NAME_Model> OrderFieldConvert(this IOrderedEnumerable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
         {
             switch (field)
@@ -411,6 +503,10 @@ namespace OpenCodeDev.NetCMS.Server.Test
                     return query;
             }
         }
+        
+        /// <summary>
+        /// Order List by a given sets of rules.
+        /// </summary>
         public static IEnumerable<_API_NAME_Model> OrderByMatching(this IEnumerable<_API_NAME_Model> query, List<_API_NAME_PredicateOrdering> order)
         {
             bool notFirst = false;
