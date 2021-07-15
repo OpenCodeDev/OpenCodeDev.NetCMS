@@ -11,10 +11,23 @@ using OpenCodeDev.NetCMS.Core.Shared.Api.Messages;
 
 namespace _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages
 {
+    /// <summary>
+    /// Advanced Ordering System for _API_NAME_ Model.<br/>
+    /// Provided by NetCMS :)
+    /// </summary>
     [ProtoContract()]
-    public class _API_NAME_PredicateOrdering : OrderByBase
+    public class _API_NAME_PredicateOrdering
     {
-        [ProtoMember(1)] 
+        /// <summary>
+        /// Ascending or Descending
+        /// </summary>
+        [ProtoMember(1)]
+        public OrderType Order { get; set; }
+
+        /// <summary>
+        /// Which the ordering should be based on ?
+        /// </summary>
+        [ProtoMember(2)] 
         public Fields Field { get; set; }
         public enum Fields
         {

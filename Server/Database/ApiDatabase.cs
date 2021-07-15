@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OpenCodeDev.NetCms.Server.Api.Recipe.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,18 @@ namespace OpenCodeDev.NetCms.Server.Database
         {
             base.OnModelCreating(builder); // Removing may break relation link and data structure integrity.
            
+        }
+
+        public void MockUp()
+        {
+            Recipe.Add(new RecipeModel() { Duration = 5, Name = "Recipe Name Mock" });
+            Recipe.Add(new RecipeModel() { Duration = 4, Name = "Mocking Data for Recipe" });
+            Recipe.Add(new RecipeModel() { Duration = 23, Name = "Beauty Tint Powder" });
+            Recipe.Add(new RecipeModel() { Duration = 10, Name = "Zest of Lemon" });
+            Recipe.Add(new RecipeModel() { Duration = 1, Name = "Serum for night time" });
+            Recipe.Add(new RecipeModel() { Duration = 3, Name = "Cream for dry skin" });
+            Recipe.Add(new RecipeModel() { Duration = 5, Name = "Shampoo for frizzy hair" });
+            SaveChanges();
         }
     }
 }

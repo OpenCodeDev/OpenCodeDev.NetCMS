@@ -40,13 +40,24 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
             bool nextFollowsLogic = false;
             ApiServiceBase myServiceBase = new ApiServiceBase();
             LogicTypes? nextBreakingLogic = null;
-            Expression<Func<_API_NAME_PublicModel, bool>> expr = null;
-            Expression<Func<_API_NAME_PublicModel, bool>> currentExpr = null;
+            Expression<Func<_API_NAME_Model, bool>> expr = null;
+            Expression<Func<_API_NAME_Model, bool>> currentExpr = null;
             foreach (var item in conditions)
             {
-                Expression<Func<_API_NAME_PublicModel, bool>> nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions,
-                    p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value,
-                    p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible());
+                Expression<Func<_API_NAME_Model, bool>> nonRelationField = null;
+                switch (item.Field)
+                {
+                    //_WHERE_CONDITION_PUBLIC_FETCH_FIELDS_
+                    // case RecipePredicateConditions.Fields.Duration:
+                    //     nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions, p.Duration, item.Value, typeof(Int32));
+                    //     break;
+                    // case RecipePredicateConditions.Fields.Name:
+                    //     nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions, p.Duration, item.Value, typeof(Int32));
+                    //     break;
+                    default:
+                        break;
+                }
+
 
                 if (!nextFollowsLogic)
                 {
@@ -58,25 +69,25 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
                     if (expr == null) { expr = currentExpr; }
                     else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
                     {
-                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                        expr = Expression.Lambda<Func<_API_NAME_Model, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                     }
                     else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
                     {
-                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                        expr = Expression.Lambda<Func<_API_NAME_Model, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                     }
                     currentExpr = nonRelationField;
                     nextBreakingLogic = item.LogicalOperator == LogicTypes.And ? LogicTypes.And : LogicTypes.Or;
                 }
                 else if (item.LogicalOperator == LogicTypes.AndAlso)
                 {
-                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
+                    currentExpr = Expression.Lambda<Func<_API_NAME_Model, bool>>(
                     Expression.AndAlso(currentExpr.Body,
                     new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
                         .Visit(nonRelationField.Body)), currentExpr.Parameters);
                 }
                 else if (item.LogicalOperator == LogicTypes.OrElse)
                 {
-                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
+                    currentExpr = Expression.Lambda<Func<_API_NAME_Model, bool>>(
                     Expression.OrElse(currentExpr.Body,
                     new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
                         .Visit(nonRelationField.Body)), currentExpr.Parameters);
@@ -89,17 +100,16 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
                 if (expr == null) { expr = currentExpr; }
                 else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
                 {
-                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    expr = Expression.Lambda<Func<_API_NAME_Model, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                 }
                 else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
                 {
-                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
+                    expr = Expression.Lambda<Func<_API_NAME_Model, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
                 }
             }
             // If no Condition load any 
             expr = expr == null ? p => p != null : expr;
-            Func<_API_NAME_PublicModel, bool> predFunc = expr.Compile();
-            return query.Where(p => predFunc(p));
+            return query.Where(expr);
         }
 
         /// <summary>
@@ -181,7 +191,8 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
             switch (field)
             {
                 //_MODEL_ORDERABLE_FIELD_ORDERBY_
-                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
+
+                //[FOREACH]=>[_FIELD_PUBLIC_FETCH_]
                 //[{ 
                 // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
                 // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);

@@ -2,6 +2,7 @@
 using Grpc.Net.Client;
 using Grpc.Net.Client.Web;
 using OpenCodeDev.NetCms.Shared.Api.Recipe.Controllers;
+using OpenCodeDev.NetCms.Shared.Api.Recipe.Messages;
 using ProtoBuf.Grpc;
 using ProtoBuf.Grpc.Client;
 using System;
@@ -23,19 +24,26 @@ namespace OpenCodeDev.NetCMS.Admin.Pages
                     HttpHandler = httpHandler,
                 });
                 var authService = channel.CreateGrpcService<IRecipeController>();
-                Guid MyGuidTest = Guid.NewGuid();
+            RecipeFetchRequest request = new RecipeFetchRequest() { Limit = 10, 
+            Conditions = new List<RecipePredicateConditions>() { 
+                { new RecipePredicateConditions() {  LogicalOperator = Core.Shared.Api.Messages.LogicTypes.And, Conditions = Core.Shared.Api.Messages.ConditionTypes.Equals, Field = RecipePredicateConditions.Fields.Duration, Value = "5"} }, 
+                { new RecipePredicateConditions() 
+                {  LogicalOperator = Core.Shared.Api.Messages.LogicTypes.Or, Conditions = Core.Shared.Api.Messages.ConditionTypes.Equals, Field = RecipePredicateConditions.Fields.Duration, Value = "1", } }
+            } 
+            };
 
-                //CallContext callContext = new CallOptions();
+            CallContext callContext = new CallOptions();
 
-                //try
-                //{
-                //    await authService.FetchOne(MyGuidTest, callContext);
-                //}
-                //catch (RpcException ex)
-                //{
-                //    Console.WriteLine($"{ex.Status.Detail}");
-    
-                //}
+            try
+            {
+                var list = await authService.Fetch(request, callContext);
+                Console.WriteLine("OK");
+            }
+            catch (RpcException ex)
+            {
+                Console.WriteLine($"{ex.Status.Detail}");
+
+            }
 
 
         }

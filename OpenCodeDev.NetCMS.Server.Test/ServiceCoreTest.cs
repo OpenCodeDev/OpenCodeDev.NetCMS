@@ -329,76 +329,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
     public static class API_NAME_SearchExt
     {
-        /// <summary>
-        /// Query where given field condition are met.
-        /// </summary>
-        public static IQueryable<_API_NAME_Model> WhereConditionsMet(this IQueryable<_API_NAME_Model> query, List<_API_NAME_PredicateConditions> conditions)
-        {
-            bool nextFollowsLogic = false;
-            ApiServiceBase myServiceBase = new ApiServiceBase();
-            LogicTypes? nextBreakingLogic = null;
-            Expression<Func<_API_NAME_PublicModel, bool>> expr = null;
-            Expression<Func<_API_NAME_PublicModel, bool>> currentExpr = null;
-            foreach (var item in conditions)
-            {
-                Expression<Func<_API_NAME_PublicModel, bool>> nonRelationField = p => myServiceBase.ConditionTypeDelegator(item.Conditions,
-                    p.GetType().GetPropertyInfoByName(item.Field.ToString()).GetValue(p), item.Value,
-                    p.GetType().GetProperty(item.Field.ToString()).GetUnderlyingPropertyTypeIfPossible());
-
-                if (!nextFollowsLogic)
-                {
-                    currentExpr = nonRelationField;
-
-                }
-                else if (item.LogicalOperator == LogicTypes.And || item.LogicalOperator == LogicTypes.Or)
-                {
-                    if (expr == null) { expr = currentExpr; }
-                    else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
-                    {
-                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
-                    }
-                    else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
-                    {
-                        expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
-                    }
-                    currentExpr = nonRelationField;
-                    nextBreakingLogic = item.LogicalOperator == LogicTypes.And ? LogicTypes.And : LogicTypes.Or;
-                }
-                else if (item.LogicalOperator == LogicTypes.AndAlso)
-                {
-                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
-                    Expression.AndAlso(currentExpr.Body,
-                    new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
-                        .Visit(nonRelationField.Body)), currentExpr.Parameters);
-                }
-                else if (item.LogicalOperator == LogicTypes.OrElse)
-                {
-                    currentExpr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(
-                    Expression.OrElse(currentExpr.Body,
-                    new ExpressionParameterReplacer(nonRelationField.Parameters, currentExpr.Parameters)
-                        .Visit(nonRelationField.Body)), currentExpr.Parameters);
-                }
-                nextFollowsLogic = true; // Next Loop will use nextLogic as predicate behavior
-            }
-
-            if (currentExpr != null)
-            {
-                if (expr == null) { expr = currentExpr; }
-                else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.And)
-                {
-                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.And(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
-                }
-                else if (expr != null && currentExpr != null && nextBreakingLogic != null && nextBreakingLogic == LogicTypes.Or)
-                {
-                    expr = Expression.Lambda<Func<_API_NAME_PublicModel, bool>>(Expression.Or(expr.Body, new ExpressionParameterReplacer(currentExpr.Parameters, expr.Parameters).Visit(currentExpr.Body)), expr.Parameters);
-                }
-            }
-            // If no Condition load any 
-            expr = expr == null ? p => p != null : expr;
-            Func<_API_NAME_PublicModel, bool> predFunc = expr.Compile();
-            return query.Where(p => predFunc(p));
-        }
-
+     
         /// <summary>
         /// Query where given field condition are met.
         /// </summary>
@@ -469,7 +400,6 @@ namespace OpenCodeDev.NetCMS.Server.Test
             return query.Where(p => predFunc(p));
         }
 
-       
         
         /// <summary>
         /// Convert user given field to real backing field from model.json and sort it by given direction.
@@ -514,81 +444,6 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 default:
                     return query;
             }
-        }
-
-
-        /// <summary>
-        /// Convert user given field to real backing field from model.json and sort it by given direction.
-        /// </summary>
-        public static IOrderedQueryable<_API_NAME_Model> OrderFieldConvert(this IQueryable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
-        {
-            switch (field)
-            {
-                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
-                // [{ 
-                // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
-                // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);
-                // }]
-                case _API_NAME_PredicateOrdering.Fields.Id:
-                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Id) : query.OrderByDescending(p => p.Id);
-                case _API_NAME_PredicateOrdering.Fields.Name:
-                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Name) : query.OrderByDescending(p => p.Name);
-                case _API_NAME_PredicateOrdering.Fields.Duration:
-                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Duration) : query.OrderByDescending(p => p.Duration);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Convert user given field to real backing field from model.json and sort it by given direction.
-        /// </summary>
-        public static IOrderedQueryable<_API_NAME_Model> OrderFieldConvert(this IOrderedQueryable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
-        {
-            switch (field)
-            {
-                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
-                // [{ 
-                // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
-                // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);
-                // }]
-                case _API_NAME_PredicateOrdering.Fields.Id:
-                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Id) : query.ThenByDescending(p => p.Id);
-                case _API_NAME_PredicateOrdering.Fields.Name:
-                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Name) : query.ThenByDescending(p => p.Name);
-                case _API_NAME_PredicateOrdering.Fields.Duration:
-                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Duration) : query.ThenByDescending(p => p.Duration);
-                default:
-                    return query;
-            }
-        }
-
-        /// <summary>
-        /// Order List by a given sets of rules.
-        /// </summary>
-        public static IQueryable<_API_NAME_Model> OrderByMatching(this IQueryable<_API_NAME_Model> query, List<_API_NAME_PredicateOrdering> order)
-        {
-            bool notFirst = false;
-            ApiServiceBase myServiceBase = new ApiServiceBase();
-            IOrderedQueryable<_API_NAME_Model> ordering = null;
-            foreach (var item in order)
-            {
-                if (!notFirst)
-                {
-                    ordering = query.OrderFieldConvert(item.Field, item.Order);
-                    notFirst = true;
-                }
-                else
-                {
-                    ordering = ordering.OrderFieldConvert(item.Field, item.Order);
-                }
-            }
-
-            if (ordering == null)
-            {
-                return query;
-            }
-
-            return ordering;
         }
 
         /// <summary>
@@ -642,8 +497,12 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
         public System.Int32 Limit { get; set; }
     }
-    public class _API_NAME_PredicateConditions : ConditionBase
+    public class _API_NAME_PredicateConditions 
     {
+        public ConditionTypes Conditions { get; set; }
+        public LogicTypes LogicalOperator { get; set; }
+        public string Value { get; set; }
+        public FieldTypes Type { get; set; }
         public Fields Field { get; set; }
         public enum Fields
         {
@@ -669,8 +528,12 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
     }
 
-    public class _API_NAME_PredicateOrdering : OrderByBase
+    public class _API_NAME_PredicateOrdering
     {
+        /// <summary>
+        /// Ascending or Descending
+        /// </summary>
+        public OrderType Order { get; set; }
         public Fields Field { get; set; }
         public enum Fields
         {
