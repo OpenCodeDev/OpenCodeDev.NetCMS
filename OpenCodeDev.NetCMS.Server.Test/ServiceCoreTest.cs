@@ -469,6 +469,8 @@ namespace OpenCodeDev.NetCMS.Server.Test
             return query.Where(p => predFunc(p));
         }
 
+       
+        
         /// <summary>
         /// Convert user given field to real backing field from model.json and sort it by given direction.
         /// </summary>
@@ -476,6 +478,11 @@ namespace OpenCodeDev.NetCMS.Server.Test
         {
             switch (field)
             {
+                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
+                // [{ 
+                // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
+                // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);
+                // }]
                 case _API_NAME_PredicateOrdering.Fields.Id:
                     return orderType == OrderType.Ascending ? query.OrderBy(p => p.Id) : query.OrderByDescending(p => p.Id);
                 case _API_NAME_PredicateOrdering.Fields.Name:
@@ -493,6 +500,11 @@ namespace OpenCodeDev.NetCMS.Server.Test
         {
             switch (field)
             {
+                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
+                // [{ 
+                // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
+                // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);
+                // }]
                 case _API_NAME_PredicateOrdering.Fields.Id:
                     return orderType == OrderType.Ascending ? query.ThenBy(p => p.Id) : query.ThenByDescending(p => p.Id);
                 case _API_NAME_PredicateOrdering.Fields.Name:
@@ -503,7 +515,82 @@ namespace OpenCodeDev.NetCMS.Server.Test
                     return query;
             }
         }
-        
+
+
+        /// <summary>
+        /// Convert user given field to real backing field from model.json and sort it by given direction.
+        /// </summary>
+        public static IOrderedQueryable<_API_NAME_Model> OrderFieldConvert(this IQueryable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
+        {
+            switch (field)
+            {
+                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
+                // [{ 
+                // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
+                // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);
+                // }]
+                case _API_NAME_PredicateOrdering.Fields.Id:
+                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Id) : query.OrderByDescending(p => p.Id);
+                case _API_NAME_PredicateOrdering.Fields.Name:
+                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Name) : query.OrderByDescending(p => p.Name);
+                case _API_NAME_PredicateOrdering.Fields.Duration:
+                    return orderType == OrderType.Ascending ? query.OrderBy(p => p.Duration) : query.OrderByDescending(p => p.Duration);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Convert user given field to real backing field from model.json and sort it by given direction.
+        /// </summary>
+        public static IOrderedQueryable<_API_NAME_Model> OrderFieldConvert(this IOrderedQueryable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
+        {
+            switch (field)
+            {
+                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
+                // [{ 
+                // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
+                // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);
+                // }]
+                case _API_NAME_PredicateOrdering.Fields.Id:
+                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Id) : query.ThenByDescending(p => p.Id);
+                case _API_NAME_PredicateOrdering.Fields.Name:
+                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Name) : query.ThenByDescending(p => p.Name);
+                case _API_NAME_PredicateOrdering.Fields.Duration:
+                    return orderType == OrderType.Ascending ? query.ThenBy(p => p.Duration) : query.ThenByDescending(p => p.Duration);
+                default:
+                    return query;
+            }
+        }
+
+        /// <summary>
+        /// Order List by a given sets of rules.
+        /// </summary>
+        public static IQueryable<_API_NAME_Model> OrderByMatching(this IQueryable<_API_NAME_Model> query, List<_API_NAME_PredicateOrdering> order)
+        {
+            bool notFirst = false;
+            ApiServiceBase myServiceBase = new ApiServiceBase();
+            IOrderedQueryable<_API_NAME_Model> ordering = null;
+            foreach (var item in order)
+            {
+                if (!notFirst)
+                {
+                    ordering = query.OrderFieldConvert(item.Field, item.Order);
+                    notFirst = true;
+                }
+                else
+                {
+                    ordering = ordering.OrderFieldConvert(item.Field, item.Order);
+                }
+            }
+
+            if (ordering == null)
+            {
+                return query;
+            }
+
+            return ordering;
+        }
+
         /// <summary>
         /// Order List by a given sets of rules.
         /// </summary>
@@ -522,7 +609,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 else
                 {
                     ordering = ordering.OrderFieldConvert(item.Field, item.Order);
-                }             
+                }
             }
 
             if (ordering == null)

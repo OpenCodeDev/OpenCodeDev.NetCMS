@@ -29,10 +29,14 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
     /// <summary>
     /// Provide service with vital extension for Search System, Ordering System, Filter System and much more.
     /// </summary>
-    public static class _API_NAME_CoreServiceExt
+    public static class _API_NAME_CoreServicesExt
     {
+                /// <summary>
+        /// Query where given field condition are met.
+        /// </summary>
         public static IQueryable<_API_NAME_Model> WhereConditionsMet(this IQueryable<_API_NAME_Model> query, List<_API_NAME_PredicateConditions> conditions)
         {
+            if (conditions == null) { return query; }
             bool nextFollowsLogic = false;
             ApiServiceBase myServiceBase = new ApiServiceBase();
             LogicTypes? nextBreakingLogic = null;
@@ -98,8 +102,12 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
             return query.Where(p => predFunc(p));
         }
 
+        /// <summary>
+        /// Query where given field condition are met.
+        /// </summary>
         public static IEnumerable<_API_NAME_Model> WhereConditionsMet(this IEnumerable<_API_NAME_Model> query, List<_API_NAME_PredicateConditions> conditions)
         {
+            if (conditions == null) { return query; }
             bool nextFollowsLogic = false;
             ApiServiceBase myServiceBase = new ApiServiceBase();
             LogicTypes? nextBreakingLogic = null;
@@ -165,7 +173,133 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Services
             return query.Where(p => predFunc(p));
         }
 
-    }
+        /// <summary>
+        /// Convert user given field to real backing field from model.json and sort it by given direction.
+        /// </summary>
+        public static IOrderedEnumerable<_API_NAME_Model> OrderFieldConvert(this IEnumerable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
+        {
+            switch (field)
+            {
+                //_MODEL_ORDERABLE_FIELD_ORDERBY_
+                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
+                //[{ 
+                // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
+                // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);
+                //}]
+            }
+            return null;
+        }
 
+        /// <summary>
+        /// Convert user given field to real backing field from model.json and sort it by given direction.
+        /// </summary>
+        public static IOrderedEnumerable<_API_NAME_Model> OrderFieldConvert(this IOrderedEnumerable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
+        {
+            switch (field)
+            {
+
+                //_MODEL_ORDERABLE_FIELD_THENBY_
+
+                //case _API_NAME_PredicateOrdering.Fields.Id:
+                    //return orderType == OrderType.Ascending ? query.ThenBy(p => p.Id) : query.ThenByDescending(p => p.Id);
+                default:
+                    return query;
+            }
+        }
+
+        /// <summary>
+        /// Convert user given field to real backing field from model.json and sort it by given direction.
+        /// </summary>
+        public static IOrderedQueryable<_API_NAME_Model> OrderFieldConvert(this IQueryable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
+        {
+            switch (field)
+            {
+                //_MODEL_ORDERABLE_FIELD_ORDERBY_
+                //_FOR_EACH_MODEL_PUBLIC_ORDERABLE_FIELD_
+                //[{ 
+                // case _API_NAME_PredicateOrdering.Fields._FIELD_NAME_:
+                // return orderType == OrderType.Ascending ? query.OrderBy(p => p._FIELD_NAME_) : query.OrderByDescending(p => p._FIELD_NAME_);
+                //}]
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Convert user given field to real backing field from model.json and sort it by given direction.
+        /// </summary>
+        public static IOrderedQueryable<_API_NAME_Model> OrderFieldConvert(this IOrderedQueryable<_API_NAME_Model> query, _API_NAME_PredicateOrdering.Fields field, OrderType orderType)
+        {
+            switch (field)
+            {
+                //_MODEL_ORDERABLE_FIELD_THENBY_
+
+                // case _API_NAME_PredicateOrdering.Fields.Id:
+                //     return orderType == OrderType.Ascending ? query.ThenBy(p => p.Id) : query.ThenByDescending(p => p.Id);
+                default:
+                    return query;
+            }
+        }
+
+        /// <summary>
+        /// Order List by a given sets of rules.
+        /// </summary>
+        public static IQueryable<_API_NAME_Model> OrderByMatching(this IQueryable<_API_NAME_Model> query, List<_API_NAME_PredicateOrdering> order)
+        {
+            if (order == null) { return query; }
+            bool notFirst = false;
+            ApiServiceBase myServiceBase = new ApiServiceBase();
+            IOrderedQueryable<_API_NAME_Model> ordering = null;
+            foreach (var item in order)
+            {
+                if (!notFirst)
+                {
+                    ordering = query.OrderFieldConvert(item.Field, item.Order);
+                    notFirst = true;
+                }
+                else
+                {
+                    ordering = ordering.OrderFieldConvert(item.Field, item.Order);
+                }
+            }
+
+            if (ordering == null)
+            {
+                return query;
+            }
+
+            return ordering;
+        }
+
+        /// <summary>
+        /// Order List by a given sets of rules.
+        /// </summary>
+        public static IEnumerable<_API_NAME_Model> OrderByMatching(this IEnumerable<_API_NAME_Model> query, List<_API_NAME_PredicateOrdering> order)
+        {
+            if (order == null) { return query; }
+            bool notFirst = false;
+            ApiServiceBase myServiceBase = new ApiServiceBase();
+            IOrderedEnumerable<_API_NAME_Model> ordering = null;
+            foreach (var item in order)
+            {
+                if (!notFirst)
+                {
+                    ordering = query.OrderFieldConvert(item.Field, item.Order);
+                    notFirst = true;
+                }
+                else
+                {
+                    ordering = ordering.OrderFieldConvert(item.Field, item.Order);
+                }
+            }
+
+            if (ordering == null)
+            {
+                return query;
+            }
+
+            return ordering;
+        }
+    }
 
 }
