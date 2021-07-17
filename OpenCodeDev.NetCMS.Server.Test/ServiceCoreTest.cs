@@ -181,6 +181,42 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
         }
 
+        [TestMethod("Test Condition Parsing")]
+        [TestCategory("Condition Builder")]
+        public void Test_Predicate_Builder_5()
+        {
+            Guid predicedID = Guid.NewGuid();
+            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
+                new _API_NAME_Model() { Id = predicedID, Duration = 1, Name = "Max Samson" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "David Of Israel" },
+                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "Rabbi Jeremy Ishiakel" },
+            };
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
+            {
+                Conditions = new List<_API_NAME_PredicateConditions>() {
+                    new _API_NAME_PredicateConditions(){
+                            Conditions = ConditionTypes.Equals,
+                            Field = _API_NAME_PredicateConditions.Fields.Name,
+                            Value = "Max Samson"
+                    },
+                    new _API_NAME_PredicateConditions(){
+                            Conditions = ConditionTypes.Equals,
+                            Field = _API_NAME_PredicateConditions.Fields.Name,
+                            LogicalOperator = LogicTypes.OrElse, Value = "David Of Israel"
+                    }
+                },
+                Limit = 10
+            };
+
+            List<_API_NAME_PredicateConditions> DbSet2 = 
+            new List<_API_NAME_PredicateConditions>().Parse("[Name]>Equals(Max Samson) || [Name]>Equals(David Of Israel)");
+            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
+            List<_API_NAME_Model> result_correct = DbSet.Where(p => p != null).ToList();
+            // Ensure Consistent Result between COndition Builder and Actual Linq Facts
+            foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
+
+        }
+
         [TestMethod("OrderBy Name=>ASC Then Duration=>DESC")]
         [TestCategory("OrderBy Builder")]
         public void Test_Predicate_OrderBy_Builder_1()
@@ -327,7 +363,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
     }
 
-    public static class API_NAME_SearchExt
+    public static class _API_NAME_SearchExt
     {
      
         /// <summary>
@@ -476,7 +512,84 @@ namespace OpenCodeDev.NetCMS.Server.Test
         }
 
     }
+    public static class _API_NAME_PredicateConditionExt
+    {
+        public static List<_API_NAME_PredicateConditions> Parse(this List<_API_NAME_PredicateConditions> list, string code)
+        {
+            bool capturing = false;
+            string capturingStr = "";
+            _API_NAME_PredicateConditions currentPred = null;
+            char lastChar = 'e';
+            foreach (var item in code)
+            {
+                // Field Start
+                if (item == '[' && lastChar != '\\')
+                {
+                    if (capturing) { throw new Exception("Cannot parse search condition: syntax error."); }
+                    if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
+                    capturing = true;
+                }
+                else if (capturing && item == '&' && lastChar == '&')
+                {
+                    if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
+                    currentPred.LogicalOperator = LogicTypes.AndAlso;
+                }
+                else if (capturing && item == '&' && lastChar != '&' && lastChar != '\\')
+                {
+                    if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
+                    currentPred.LogicalOperator = LogicTypes.And;
+                }
+                else if (capturing && item == '|' && lastChar == '|')
+                {
+                    if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
+                    currentPred.LogicalOperator = LogicTypes.OrElse;
+                }
+                else if (capturing && item == '|' && lastChar != '|' && lastChar != '\\')
+                {
+                    if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
+                    currentPred.LogicalOperator = LogicTypes.Or;
+                }
+                else if (capturing && item == ']' && lastChar != '\\')
+                {
+                    bool foundField = false;
+                    foreach (var field in ((_API_NAME_PredicateConditions.Fields[])Enum.GetValues(typeof(_API_NAME_PredicateConditions.Fields))).Distinct())
+                    {
+                        if (field.ToString().Equals(capturingStr)) { currentPred.Field = field; foundField = true; }
+                        if (foundField) { break; }
+                    }
+                    capturingStr = "";
+                    capturing = false;
+                }
+                else if (item == '>') // Start Reading Function
+                {
+                    capturing = true;
+                }
+                else if (capturing && item == '(' && lastChar != '\\')
+                { // Finish Reading Function and Starting Reading Value
 
+                    bool foundFunc = false;
+                    foreach (var func in ((ConditionTypes[])Enum.GetValues(typeof(ConditionTypes))).Distinct())
+                    {
+                        if (func.ToString().Equals(capturingStr)) { currentPred.Conditions = func; foundFunc = true; }
+                        if (foundFunc) { break; }
+                    }
+                    capturingStr = ""; // reset for Value intake
+                }
+                else if (capturing && item == ')' && lastChar != '\\')
+                {
+                    currentPred.Value = capturingStr;
+                    list.Add(currentPred);
+                    currentPred = null;
+                    capturingStr = ""; // reset for Value intake
+                }
+                else if (capturing)
+                {
+                    capturingStr += item;
+                }
+            }
+            return list;
+        }
+    }
 
     public class _API_NAME_PublicModel
     {
