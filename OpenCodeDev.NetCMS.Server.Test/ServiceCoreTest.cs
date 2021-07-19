@@ -181,16 +181,10 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
         }
 
-        [TestMethod("Test Condition Parsing")]
+        [TestMethod("Condition Parsing 1")]
         [TestCategory("Condition Builder")]
-        public void Test_Predicate_Builder_5()
+        public void Test_Condition_Parsing_1()
         {
-            Guid predicedID = Guid.NewGuid();
-            List<_API_NAME_Model> DbSet = new List<_API_NAME_Model>() {
-                new _API_NAME_Model() { Id = predicedID, Duration = 1, Name = "Max Samson" },
-                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "David Of Israel" },
-                new _API_NAME_Model() { Id = Guid.NewGuid(), Duration = 1, Name = "Rabbi Jeremy Ishiakel" },
-            };
             _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
             {
                 Conditions = new List<_API_NAME_PredicateConditions>() {
@@ -210,10 +204,60 @@ namespace OpenCodeDev.NetCMS.Server.Test
 
             List<_API_NAME_PredicateConditions> DbSet2 = 
             new List<_API_NAME_PredicateConditions>().Parse("[Name]>Equals(Max Samson) || [Name]>Equals(David Of Israel)");
-            List<_API_NAME_Model> result = DbSet.WhereConditionsMet(conditions.Conditions).ToList();
-            List<_API_NAME_Model> result_correct = DbSet.Where(p => p != null).ToList();
-            // Ensure Consistent Result between COndition Builder and Actual Linq Facts
-            foreach (var cRez in result_correct) { Assert.IsTrue(result.Contains(cRez)); }
+            Assert.IsTrue(DbSet2.Count == conditions.Conditions.Count);
+            foreach (var item in conditions.Conditions)
+            {
+                var parsed = DbSet2[conditions.Conditions.IndexOf(item)];
+                Assert.IsTrue(parsed.Conditions == item.Conditions);
+                Assert.IsTrue(parsed.Field == item.Field);
+                Assert.IsTrue(parsed.LogicalOperator == item.LogicalOperator);
+                Assert.IsTrue(parsed.Value == item.Value);
+            }
+
+        }
+
+        [TestMethod("Condition Parsing 2")]
+        [TestCategory("Condition Builder")]
+        public void Test_Condition_Parsing_2()
+        {
+            _API_NAME_FetchRequest conditions = new _API_NAME_FetchRequest()
+            {
+                Conditions = new List<_API_NAME_PredicateConditions>() {
+                    new _API_NAME_PredicateConditions(){
+                            Conditions = ConditionTypes.Equals,
+                            Field = _API_NAME_PredicateConditions.Fields.Name,
+                            Value = "Max Samson"
+                    },
+                    new _API_NAME_PredicateConditions(){
+                            Conditions = ConditionTypes.Contains,
+                            Field = _API_NAME_PredicateConditions.Fields.Name,
+                            LogicalOperator = LogicTypes.OrElse, Value = "Of"
+                    },
+                    new _API_NAME_PredicateConditions(){
+                            Conditions = ConditionTypes.EndsWith,
+                            Field = _API_NAME_PredicateConditions.Fields.Name,
+                            LogicalOperator = LogicTypes.Or, Value = "Israel"
+                    },
+                    new _API_NAME_PredicateConditions(){
+                            Conditions = ConditionTypes.StartsWith,
+                            Field = _API_NAME_PredicateConditions.Fields.Name,
+                            LogicalOperator = LogicTypes.AndAlso, Value = "David"
+                    }
+                },
+                Limit = 10
+            };
+
+            List<_API_NAME_PredicateConditions> DbSet2 =
+            new List<_API_NAME_PredicateConditions>().Parse("[Name]>Equals(Max Samson) || [Name]>Contains(Of) | [Name]>EndsWith(Israel) && [Name]>StartsWith(David)");
+            Assert.IsTrue(DbSet2.Count == conditions.Conditions.Count);
+            foreach (var item in conditions.Conditions)
+            {
+                var parsed = DbSet2[conditions.Conditions.IndexOf(item)];
+                Assert.IsTrue(parsed.Conditions == item.Conditions);
+                Assert.IsTrue(parsed.Field == item.Field);
+                Assert.IsTrue(parsed.LogicalOperator == item.LogicalOperator);
+                Assert.IsTrue(parsed.Value == item.Value);
+            }
 
         }
 
@@ -519,37 +563,37 @@ namespace OpenCodeDev.NetCMS.Server.Test
             bool capturing = false;
             string capturingStr = "";
             _API_NAME_PredicateConditions currentPred = null;
-            char lastChar = 'e';
+            char? lastChar = null;
             foreach (var item in code)
             {
                 // Field Start
-                if (item == '[' && lastChar != '\\')
+                if (item == '[' && (lastChar == null || lastChar != '\\'))
                 {
                     if (capturing) { throw new Exception("Cannot parse search condition: syntax error."); }
                     if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
                     capturing = true;
                 }
-                else if (capturing && item == '&' && lastChar == '&')
-                {
-                    if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
-                    currentPred.LogicalOperator = LogicTypes.AndAlso;
-                }
-                else if (capturing && item == '&' && lastChar != '&' && lastChar != '\\')
+                else if (item == '&' && (lastChar == null || lastChar != '&' && lastChar != '\\'))
                 {
                     if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
                     currentPred.LogicalOperator = LogicTypes.And;
                 }
-                else if (capturing && item == '|' && lastChar == '|')
+                else if (item == '&' && (lastChar == null || lastChar == '&'))
                 {
                     if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
-                    currentPred.LogicalOperator = LogicTypes.OrElse;
+                    currentPred.LogicalOperator = LogicTypes.AndAlso;
                 }
-                else if (capturing && item == '|' && lastChar != '|' && lastChar != '\\')
+                else if (item == '|' && (lastChar == null || lastChar != '|' && lastChar != '\\'))
                 {
                     if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
                     currentPred.LogicalOperator = LogicTypes.Or;
                 }
-                else if (capturing && item == ']' && lastChar != '\\')
+                else if (item == '|' && (lastChar != null && lastChar == '|'))
+                {
+                    if (currentPred == null) { currentPred = new _API_NAME_PredicateConditions(); }
+                    currentPred.LogicalOperator = LogicTypes.OrElse;
+                }
+                else if (capturing && item == ']' && (lastChar == null || lastChar != '\\'))
                 {
                     bool foundField = false;
                     foreach (var field in ((_API_NAME_PredicateConditions.Fields[])Enum.GetValues(typeof(_API_NAME_PredicateConditions.Fields))).Distinct())
@@ -564,7 +608,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
                 {
                     capturing = true;
                 }
-                else if (capturing && item == '(' && lastChar != '\\')
+                else if (capturing && item == '(' && (lastChar == null || lastChar != '\\'))
                 { // Finish Reading Function and Starting Reading Value
 
                     bool foundFunc = false;
@@ -575,17 +619,19 @@ namespace OpenCodeDev.NetCMS.Server.Test
                     }
                     capturingStr = ""; // reset for Value intake
                 }
-                else if (capturing && item == ')' && lastChar != '\\')
+                else if (capturing && item == ')' && (lastChar == null || lastChar != '\\'))
                 {
                     currentPred.Value = capturingStr;
                     list.Add(currentPred);
                     currentPred = null;
                     capturingStr = ""; // reset for Value intake
+                    capturing = false;
                 }
                 else if (capturing)
                 {
                     capturingStr += item;
                 }
+                lastChar = item;
             }
             return list;
         }
@@ -613,7 +659,7 @@ namespace OpenCodeDev.NetCMS.Server.Test
     public class _API_NAME_PredicateConditions 
     {
         public ConditionTypes Conditions { get; set; }
-        public LogicTypes LogicalOperator { get; set; }
+        public LogicTypes LogicalOperator { get; set; } = LogicTypes.And;
         public string Value { get; set; }
         public FieldTypes Type { get; set; }
         public Fields Field { get; set; }
