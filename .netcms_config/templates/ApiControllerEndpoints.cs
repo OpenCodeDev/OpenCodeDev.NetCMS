@@ -151,29 +151,39 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
             }
         }
 
-        public virtual async Task<List<_API_NAME_PublicModel>> UpdateMany(_API_NAME_UpdateManyRequest request, CallContext context = default)
+        public virtual async Task<List<_API_NAME_UpdateManyResponse>> UpdateMany(_API_NAME_UpdateManyRequest request, CallContext context = default)
         {
-            try
+            var api = new RecipeController();
+            List<_API_NAME_UpdateManyResponse> list = new List<_API_NAME_UpdateManyResponse>();
+            foreach (var item in request.BulkUpdate)
             {
-                var api = new _API_NAME_Controller();
-                return await api.UpdateMany(request, context);
+                var resultResponse = new _API_NAME_UpdateManyResponse();
+                try
+                {
+                    var result = await Update(item, context);
+                    resultResponse.Entry = result;
+                }
+                catch (RpcException ex)
+                {
+                    resultResponse.Error = new RpcException(new Status(ex.Status.StatusCode, ex.Status.Detail));
+                    resultResponse.HasError = true;
+                }
+                catch (NullReferenceException ex)
+                {
+                    resultResponse.Error = new RpcException(new Status(StatusCode.NotFound, "Entry was not found."));
+                    resultResponse.HasError = true;
+                }
+                catch (Exception ex)
+                {
+                    //TODO: IDEA ?  Create a grpc error handler at core base, whenever error is thrown during request,
+                    // error is related to the core system and every plugin register all error handling with messages then core return grpc error to throw.
+                    // Example: Stripe would register StripeException, so whenever a plugin uses stripe and throw that error, catch this to print a more accurate msg for user.
+                    resultResponse.Error = new RpcException(new Status(StatusCode.Unknown, "Unknown error occured"));
+                    resultResponse.HasError = true;
+                }
+
             }
-            catch (RpcException ex)
-            {
-                throw new RpcException(new Status(ex.Status.StatusCode, ex.Status.Detail));
-            }
-            catch (NullReferenceException ex)
-            {
-                throw new RpcException(new Status(StatusCode.NotFound, "Entry was not found."));
-            }
-            catch (Exception ex)
-            {
-                //TODO: IDEA ?  Create a grpc error handler at core base, whenever error is thrown during request,
-                // error is related to the core system and every plugin register all error handling with messages then core return grpc error to throw.
-                // Example: Stripe would register StripeException, so whenever a plugin uses stripe and throw that error, catch this to print a more accurate msg for user.
-                Console.WriteLine(ex.Message);
-                throw new RpcException(new Status(StatusCode.Unknown, "Unknown error occured"));
-            }
+            return list;
         }
     }
 }

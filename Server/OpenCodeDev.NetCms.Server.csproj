@@ -15,9 +15,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include=".generated\OpenCodeDev.NetCms.Server.Api.Recipe.Controllers.RecipeController.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Server.Api.Recipe.Controllers.RecipeControllerEndpoints.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Server.Api.Recipe.Models.RecipeModel.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Server.Api.Recipe.Services.RecipeController.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Server.Api.Recipe.Services.RecipeCoreServices.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Server.Api.Recipe.Services.RecipeCoreServicesExt.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Server.Database.DatabaseBase.cs" />

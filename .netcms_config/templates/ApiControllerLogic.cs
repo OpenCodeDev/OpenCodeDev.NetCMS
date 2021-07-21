@@ -32,7 +32,14 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
     {
         public virtual async Task<_API_NAME_PublicModel> Create(_API_NAME_CreateRequest request, CallContext context = default)
         {         
-            throw new NotImplementedException();
+            var provider = context.ServerCallContext.GetHttpContext().RequestServices;
+            var db = provider.GetRequiredService<ApiDatabase>();
+            var newEntry = new _API_NAME_Model() { 
+              //_MAPPING_FIELDS_CREATE_
+            };
+            db.Add(newEntry);
+            await db.SaveChangesAsync();
+            return newEntry;
         }
 
         public virtual async Task<_API_NAME_PublicModel> Delete(_API_NAME_DeleteRequest request, CallContext context = default)
@@ -82,11 +89,11 @@ namespace _NAMESPACE_BASE_SERVER_.Api._API_NAME_.Controllers
             if(updating == null){
                 throw new RpcException(new Status(StatusCode.NotFound, $"Cannot update {request.Id} because entry wasn't found."));
             }
-            updating = myService.FilterUpdate(updating, (_API_NAME_Model)request.Element);
+            //_MAPPING_FIELDS_UPDATE_
             // updating = myService.FilterUpdateReferences(db, updating, request);
             db._API_NAME_.Add(updating);
             await db.SaveChangesAsync();
-            return updating;
+            return (_API_NAME_PublicModel)updating;
         }
     }
 }
