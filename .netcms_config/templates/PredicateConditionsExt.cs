@@ -3,7 +3,8 @@
 using ProtoBuf;
 using Grpc.Core;
 using System;
-
+using System.Collections.Generic;
+using System.Linq;
 
 // Core System
 using OpenCodeDev.NetCMS.Core.Shared.Api.Messages;
@@ -13,6 +14,10 @@ namespace _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages
 {
     public static class _API_NAME_PredicateConditionExt
     {
+        /// <summary>
+        /// Parse Predication Condition String Code to C# Model.
+        /// </summary>
+        /// <param name="code">See Doc, Eg: [Id]>Equals(X) && [Name]>Contains(My String)</param>
         public static List<_API_NAME_PredicateConditions> Parse(this List<_API_NAME_PredicateConditions> list, string code)
         {
             bool capturing = false;

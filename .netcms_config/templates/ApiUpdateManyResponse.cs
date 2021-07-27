@@ -1,10 +1,12 @@
 
  using ProtoBuf;
+ using Grpc.Core;
  using System;
  using System.ComponentModel.DataAnnotations;
  using System.Collections.Generic;
 
 
+using _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Models;
  namespace _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages { 
 
     [ProtoContract()]

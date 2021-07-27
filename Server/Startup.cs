@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using OpenCodeDev.NetCms.Server.Api.Recipe.Controllers;
 using OpenCodeDev.NetCms.Server.Database;
 using ProtoBuf.Grpc.Server;
+using OpenCodeDev.NetCms.Core.Server.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,11 @@ namespace OpenCodeDev.NetCms.Server
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "OpenCodeDev.CMS", Version = "v1" });
             });
+
+            // Register All Plugins in Database or Load Active Plugins.
+            services.AddPlugins(x=> { 
+                x.UseSecurePluginOnly = false; 
+            }); 
         }
 
 
@@ -67,10 +73,12 @@ namespace OpenCodeDev.NetCms.Server
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseRouting();
             app.UseGrpcWeb(new GrpcWebOptions() { DefaultEnabled = true });
             app.UseCors();
+
+            app.UsePlugins();
 
             // EF CORE
             var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
@@ -84,7 +92,7 @@ namespace OpenCodeDev.NetCms.Server
 
                 //db.EnsurePermissionsCreated(Configuration.GetSection("PermissionRoles").GetChildren().ToArray().Select(c => c.Value).ToArray());
             }
-            
+
             
             app.UseEndpoints(
                 endpoints =>

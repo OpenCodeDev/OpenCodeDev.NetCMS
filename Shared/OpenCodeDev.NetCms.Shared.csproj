@@ -47,7 +47,9 @@
     <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeFetchOneRequest.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeFetchRequest.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipePredicateConditions.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipePredicateConditionsExt.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipePredicateOrdering.cs" />
+    <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeUpdateManyResponse.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Messages.RecipeUpdateOneRequest.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Shared.Api.Recipe.Models.RecipePublicModel.cs" />
     <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />

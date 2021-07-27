@@ -21,7 +21,6 @@
     <Compile Include=".generated\OpenCodeDev.NetCms.Server.Api.Recipe.Services.RecipeCoreServices.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Server.Api.Recipe.Services.RecipeCoreServicesExt.cs" />
     <Compile Include=".generated\OpenCodeDev.NetCms.Server.Database.DatabaseBase.cs" />
-
   </ItemGroup>
 
   <ItemGroup>
@@ -50,7 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Api\Recipe\Config\" />
-    <Folder Include="Database\_Generated\" />
     <Folder Include="DataContext\" />
     <Folder Include="..\Configuration\" />
   </ItemGroup>

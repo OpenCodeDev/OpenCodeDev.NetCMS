@@ -43,7 +43,7 @@ using _NAMESPACE_BASE_SHARED_.Api._API_NAME_.Messages;
         /// Call to Process many updates of _API_NAME_ in a single call through GRPC.
         /// </summary>
         [OperationContract()]
-        Task<List<_API_NAME_PublicModel>> UpdateMany (_API_NAME_UpdateManyRequest request, CallContext context = default); 
+        Task<List<_API_NAME_UpdateManyResponse>> UpdateMany (_API_NAME_UpdateManyRequest request, CallContext context = default); 
 
 
         /// <summary>
