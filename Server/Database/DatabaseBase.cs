@@ -21,6 +21,7 @@ namespace OpenCodeDev.NetCms.Server.Database
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             // Link Multiple Ingredients One-Way
             // Many To Zero (If Recipe is Link to Removed)
 
