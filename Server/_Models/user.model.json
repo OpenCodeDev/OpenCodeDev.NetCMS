@@ -1,0 +1,110 @@
+{
+  "Collection": {
+    "Name": "User"
+  },
+  "Attributes": [
+    {
+      "Name": "Serializable",
+      "Value": ""
+    },
+    {
+      "Name": "ProtoContract",
+      "Value": ""
+    }
+  ],
+  "Usings": [ "ProtoBuf", "System", "System.Collections.Generic", "System.ComponentModel.DataAnnotations", "System.ComponentModel.DataAnnotations.Schema" ],
+  "Properties": [
+    {
+      "Name": "Email",
+      "Type": "System.String",
+      "Default": null,
+      "Private": false,
+      "Unique": true,
+      "ServerSideOnly": false,
+      "ArgumentOf": [ "Update", "Create", "Fetch" ],
+      "Attributes": [
+        {
+          "Name": "Required",
+          "Value": ""
+        },
+        {
+          "Name": "EmailAddress",
+          "Value": ""
+        }
+      ]
+    },
+    {
+      "Name": "FirstName",
+      "Type": "System.String",
+      "Default": null,
+      "Private": false,
+      "Unique": false,
+      "ServerSideOnly": false,
+      "ArgumentOf": [ "Update", "Create", "Fetch" ],
+      "Attributes": [
+        {
+          "Name": "Required",
+          "Value": ""
+        }
+      ]
+    },
+    {
+      "Name": "LastName",
+      "Type": "System.String",
+      "Default": null,
+      "Private": false,
+      "Unique": false,
+      "ServerSideOnly": false,
+      "ArgumentOf": [ "Update", "Create", "Fetch" ],
+      "Attributes": [
+        {
+          "Name": "Required",
+          "Value": ""
+        }
+      ]
+    },
+    {
+      "Name": "Password",
+      "Type": "System.String",
+      "Default": null,
+      "Private": false,
+      "Unique": false,
+      "ServerSideOnly": false,
+      "ArgumentOf": [ "Update", "Create", "Fetch" ],
+      "Attributes": [
+        {
+          "Name": "Required",
+          "Value": ""
+        },
+        {
+          "Name": "DataType",
+          "Value": "DataType.Password"
+        }
+      ]
+    },
+    {
+      "Name": "PasswordConfirm",
+      "Type": "System.String",
+      "Unmapped": true,
+      "Default": null,
+      "Private": false,
+      "Unique": false,       
+      "ServerSideOnly": false,
+      "ArgumentOf": [ "Update", "Create" ],
+      "Attributes": [
+        {
+          "Name": "Required",
+          "Value": ""
+        },
+        {
+          "Name": "DataType",
+          "Value": "DataType.Password"
+        },
+        {
+          "Name": "Compare",
+          "Value": "\"Password\""
+        }
+      ]
+    }
+  ]
+}
