@@ -1,0 +1,12 @@
+{
+    "General":{
+        "Name":"Assembly",
+        "GUID":"Global Unique Identity, Tracking Purposes.",
+        "Version":"1.0.0"
+    },
+    "Plugins":[
+        {
+            "Name": "Plugin"
+        }
+    ]
+}

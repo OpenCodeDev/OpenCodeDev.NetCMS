@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 //using OpenCodeDev.NetCMS.Generated.Api.Recipe.Model;
 namespace OpenCodeDev.NetCms.Server
 {
@@ -56,9 +57,9 @@ namespace OpenCodeDev.NetCms.Server
             });
 
             // Register All Plugins in Database or Load Active Plugins.
-            services.AddPlugins(x=> { 
-                x.UseSecurePluginOnly = false; 
-            }); 
+            //services.AddPlugins(x=> { 
+            //    x.UseSecurePluginOnly = false; 
+            //}); 
         }
 
 
@@ -78,7 +79,7 @@ namespace OpenCodeDev.NetCms.Server
             app.UseGrpcWeb(new GrpcWebOptions() { DefaultEnabled = true });
             app.UseCors();
 
-            app.UsePlugins();
+            //app.UsePlugins();
 
             // EF CORE
             var serviceScopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
